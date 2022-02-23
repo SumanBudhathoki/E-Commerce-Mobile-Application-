@@ -2,13 +2,10 @@ from .serializers import UserSerializer #serializer that we created
 from rest_framework.views import APIView #Class based views
 from rest_framework.response import Response #For response
 from rest_framework import status #Status code for imformative response
-# from rest_framework.permissions import IsAdminUser #for checking the user is staff or not
 from django.contrib.auth.models import User
 
 
 class UserRegistration(APIView):
-    # permission_classes = [IsAdminUser]
-
     #To access the list of all registered users
 
     def get(self, format= None):
@@ -16,11 +13,13 @@ class UserRegistration(APIView):
         serializer = UserSerializer(users,  many = True)
         return Response(serializer.data)
 
-    #To create the user
+    # To create the user
     def post(self, request):
+
+        
         serializer = UserSerializer(data = request.data)
-        if serializer.is_valid(raise_exception=ValueError):
-            serializer.create(validated_data=request.data)
+        if serializer.is_valid():
+            serializer.save()
             return Response(
                 serializer.data,
                 status=status.HTTP_201_CREATED
@@ -32,3 +31,10 @@ class UserRegistration(APIView):
             },
             status=status.HTTP_400_BAD_REQUEST
         )
+
+    # def post(self, request):
+    #     serializers = UserSerializer(data=request.data)
+    #     if serializers.is_valid():
+    #         serializers.save()
+    #         return Response({'error': False})
+    #     return Response({'error': True})
