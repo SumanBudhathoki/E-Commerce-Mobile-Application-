@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/screens/homescreen.dart';
+import 'package:flutter_application/screens/product_detail.dart';
 import 'package:flutter_application/screens/register.dart';
+import 'package:flutter_application/state/product_state.dart';
 import 'package:flutter_application/state/user_state.dart';
 import 'package:provider/provider.dart';
 import 'screens/login.dart';
@@ -14,16 +16,26 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => UserState(),
+    return MultiProvider(
+      // create: (context) => UserState(),
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => UserState(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ProductState(),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'Poppins'),
-        home: const LoginScreen(),
+        home: const HomeScreen(),
         routes: {
-          HomeScreen.routeName: (context) => HomeScreen(),
-          LoginScreen.routeName: (context) => LoginScreen(),
-          RegisterScreen.routeName: (context) => RegisterScreen(),
+          HomeScreen.routeName: (context) => const HomeScreen(),
+          ProductDetailScreen.routeName: (context) =>
+              const ProductDetailScreen(),
+          LoginScreen.routeName: (context) => const LoginScreen(),
+          RegisterScreen.routeName: (context) => const RegisterScreen(),
         },
       ),
     );

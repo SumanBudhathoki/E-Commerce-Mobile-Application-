@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Center(
                     child: Image(
                       image: AssetImage(
-                        'assets/logo.png',
+                        'assets/icon/logo.png',
                       ),
                       height: 300,
                       width: 300,
@@ -81,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 60,
                 ),
-                Text('Welcome Back!', style: sTitleText),
+                Text('Welcome Back!', style: sTitleText.copyWith()),
                 const SizedBox(height: 5),
                 TextFormField(
                   decoration: const InputDecoration(

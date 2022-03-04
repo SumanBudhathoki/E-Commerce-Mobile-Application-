@@ -11,7 +11,10 @@ const kTextFieldColor = Color(0xFF979797);
 const kDefaultPadding = EdgeInsets.symmetric(horizontal: 30);
 
 TextStyle titleText = const TextStyle(
-    color: kPrimaryColor, fontSize: 34, fontWeight: FontWeight.w700);
+  color: kPrimaryColor,
+  fontSize: 34,
+  fontWeight: FontWeight.w700,
+);
 
 TextStyle sTitleText = const TextStyle(color: kPrimaryColor, fontSize: 30);
 
