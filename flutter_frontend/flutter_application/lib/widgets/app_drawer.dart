@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/screens/favourite.dart';
 import 'package:flutter_application/screens/homescreen.dart';
 import 'package:flutter_application/screens/login.dart';
 
@@ -27,12 +28,15 @@ class AppDrawer extends StatelessWidget {
             title: const Text("Home"),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(FavouriteScreen.routeName);
+            },
             trailing: const Icon(
               Icons.favorite,
               color: Colors.red,
             ),
-            title: const Text("Favourite"),
+            title: const Text("Favourites"),
           ),
           const Spacer(),
           const Divider(

@@ -45,19 +45,20 @@ class _HomeScreenState extends State<HomeScreen> {
           title: const Text('HomeScreen'),
         ),
         body: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: 2 / 3,
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-            ),
-            itemCount: product.length,
-            itemBuilder: (context, i) => SingleProduct(
-                  id: product[i].id!,
-                  title: product[i].title!,
-                  image: product[i].image!,
-                  favourite: product[i].favourite!,
-                )),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            childAspectRatio: 2 / 3,
+            crossAxisCount: 2,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+          ),
+          itemCount: product.length,
+          itemBuilder: (context, i) => SingleProduct(
+            id: product[i].id!,
+            title: product[i].title!,
+            image: product[i].image!,
+            favourite: product[i].favourite!,
+          ),
+        ),
       );
     }
   }

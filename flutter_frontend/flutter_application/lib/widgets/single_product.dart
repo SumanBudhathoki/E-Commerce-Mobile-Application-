@@ -20,22 +20,7 @@ class SingleProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridTile(
-      header: const GridTileBar(),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.of(context).pushNamed(
-            ProductDetailScreen.routeName,
-            arguments: id,
-          );
-        },
-        child: Image.network(
-          "http://10.0.2.2:8000$image",
-          fit: BoxFit.cover,
-        ),
-      ),
-      footer: GridTileBar(
-        backgroundColor: Colors.black54,
-        title: Text(title),
+      header: GridTileBar(
         leading: IconButton(
           onPressed: () {
             Provider.of<ProductState>(context, listen: false).favourite(id);
@@ -45,6 +30,25 @@ class SingleProduct extends StatelessWidget {
             color: Colors.red,
           ),
         ),
+      ),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.of(context).pushNamed(
+            ProductDetailScreen.routeName,
+            arguments: id,
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Image.network(
+            "http://10.0.2.2:8000$image",
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+      footer: GridTileBar(
+        backgroundColor: Colors.black54,
+        title: Text(title),
       ),
     );
   }
