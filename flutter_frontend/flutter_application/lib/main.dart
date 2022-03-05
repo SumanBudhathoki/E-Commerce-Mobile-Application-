@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/screens/favourite.dart';
 import 'package:flutter_application/screens/homescreen.dart';
 import 'package:flutter_application/screens/product_detail.dart';
 import 'package:flutter_application/screens/register.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
           HomeScreen.routeName: (context) => const HomeScreen(),
           ProductDetailScreen.routeName: (context) =>
               const ProductDetailScreen(),
+          FavouriteScreen.routeName: (context) => const FavouriteScreen(),
           LoginScreen.routeName: (context) => const LoginScreen(),
           RegisterScreen.routeName: (context) => const RegisterScreen(),
         },

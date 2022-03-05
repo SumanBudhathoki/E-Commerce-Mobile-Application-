@@ -1,5 +1,7 @@
 from cgi import print_directory
 from math import prod
+
+from numpy import product
 from .serializers import * #serializers that we created 
 from rest_framework.views import APIView #Class based views
 from rest_framework.response import Response #For response
@@ -53,3 +55,28 @@ class ProductView(APIView):
                 product['favourite'] = False
             data.append(product)
         return Response(data)
+
+class FavouriteView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    def post(self, request):        
+        id= request.data["id"]
+        print(id)
+        try:
+            product_obj = Product.objects.get(id = id)
+            user = request.user
+            single_fav_product = Favourite.objects.filter(user = user).filter(product= product_obj).first()
+            if single_fav_product:
+                print("Single Favourite Product")
+                ccc = single_fav_product.isFavorite
+                single_fav_product.isFavorite = not ccc
+                single_fav_product.save()
+            else:
+                Favourite.objects.create(
+                    product = product_obj, user = user, isFavorite = True
+                )
+            response_msg = {'error': False}
+        except:
+            response_msg = {'error': True}
+        return Response(response_msg)
+          

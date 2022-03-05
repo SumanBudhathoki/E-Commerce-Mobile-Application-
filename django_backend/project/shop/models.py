@@ -35,7 +35,7 @@ class Favourite(models.Model):
     isFavorite = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"productID = {self.product.id}user = {self.user.username}| IsFavourite = {self.isFavorite}"
+        return f"productID = {self.product.id} user = {self.user.username}| IsFavourite = {self.isFavorite}"
 
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
