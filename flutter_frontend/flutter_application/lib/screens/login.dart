@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _form.currentState?.save();
     bool islogin = await Provider.of<UserState>(context, listen: false)
         .loginNow(_username, _password);
-    if (!islogin) {
+    if (islogin) {
       Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
     } else {
       showDialog(

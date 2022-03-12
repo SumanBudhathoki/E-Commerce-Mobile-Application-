@@ -2,16 +2,18 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/models/product.dart';
 import 'package:http/http.dart' as http;
+import 'package:localstorage/localstorage.dart';
 
 class ProductState with ChangeNotifier {
+  LocalStorage storage = LocalStorage("usertoken");
   List<Product> _products = [];
 
   Future<bool> getProducts() async {
     String url = 'http://10.0.2.2:8000/api/products';
+    var token = storage.getItem('token');
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: {
-        'Authorization': "token f537bc45ca003a76c7a14aef106ecbc225caa1bb"
-      });
+      http.Response response = await http
+          .get(Uri.parse(url), headers: {'Authorization': "token $token"});
       var data = json.decode(response.body) as List;
       // print(data);
       List<Product> temp = [];
@@ -30,8 +32,10 @@ class ProductState with ChangeNotifier {
     }
   }
 
-  Future<void> favourite(int id) async {
+  Future<void> favourite(id) async {
     String url = 'http://10.0.2.2:8000/api/favourite/';
+    var token = storage.getItem('token');
+
     try {
       // ignore: unused_local_variable
       http.Response response = await http.post(
@@ -41,7 +45,7 @@ class ProductState with ChangeNotifier {
         }),
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': "token f537bc45ca003a76c7a14aef106ecbc225caa1bb"
+          'Authorization': "token $token"
         },
       );
       getProducts();

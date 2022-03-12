@@ -2,11 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/screens/favourite.dart';
 import 'package:flutter_application/screens/homescreen.dart';
 import 'package:flutter_application/screens/login.dart';
+import 'package:localstorage/localstorage.dart';
 
-class AppDrawer extends StatelessWidget {
+import '../screens/order_history_screen.dart';
+
+class AppDrawer extends StatefulWidget {
   const AppDrawer({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<AppDrawer> createState() => _AppDrawerState();
+}
+
+class _AppDrawerState extends State<AppDrawer> {
+  LocalStorage storage = LocalStorage('usertoken');
+
+  void _logoutNow() async {
+    await storage.clear();
+    Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +53,24 @@ class AppDrawer extends StatelessWidget {
             ),
             title: const Text("Favourites"),
           ),
+          ListTile(
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(OrderHistoryScreen.routeName);
+            },
+            trailing: const Icon(
+              Icons.history,
+              color: Colors.blue,
+            ),
+            title: const Text("Order History"),
+          ),
           const Spacer(),
           const Divider(
             color: Colors.grey,
           ),
           ListTile(
             onTap: () {
-              Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+              _logoutNow();
             },
             trailing: const Icon(
               Icons.logout,

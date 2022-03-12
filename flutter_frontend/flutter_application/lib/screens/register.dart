@@ -4,7 +4,6 @@ import 'package:flutter_application/state/user_state.dart';
 import 'package:flutter_application/theme.dart';
 import 'package:flutter_application/widgets/primary_button.dart';
 import 'package:provider/provider.dart';
-
 import '../widgets/checkbox.dart';
 import '../widgets/login_option.dart';
 

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/screens/cart.dart';
+import 'package:flutter_application/state/cart_state.dart';
 import 'package:flutter_application/state/product_state.dart';
 import 'package:flutter_application/widgets/app_drawer.dart';
 import 'package:flutter_application/widgets/single_product.dart';
@@ -19,6 +21,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void didChangeDependencies() async {
     if (_init) {
+      Provider.of<CartState>(context).getoldOrders();
+      Provider.of<CartState>(context).getCartData();
       _isLoading = await Provider.of<ProductState>(context).getProducts();
       setState(() {});
     }
@@ -29,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<ProductState>(context).product;
-
+    final cart = Provider.of<CartState>(context).cartModel;
     if (!_isLoading) {
       return Scaffold(
         drawer: const AppDrawer(),
@@ -43,6 +47,24 @@ class _HomeScreenState extends State<HomeScreen> {
         drawer: const AppDrawer(),
         appBar: AppBar(
           title: const Text('HomeScreen'),
+          actions: [
+            IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+            FlatButton.icon(
+              onPressed: () {
+                Navigator.of(context).pushNamed(CartScreen.routeName);
+              },
+              icon: const Icon(
+                Icons.shopping_cart,
+                color: Colors.white,
+              ),
+              label: Text(
+                cart != null ? "${cart.cartproducts?.length}" : '',
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            )
+          ],
         ),
         body: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

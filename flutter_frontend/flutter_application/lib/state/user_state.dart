@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_application/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
 
@@ -18,21 +19,17 @@ class UserState with ChangeNotifier {
             'password': password,
           }));
       var data = json.decode(response.body) as Map;
-      // print(data);
-      storage.setItem('token', data['token']);
-      // print(storage.getItem('token'));
       if (data.containsKey('token')) {
-        return false;
+        storage.setItem('token', data['token']);
+        return true;
       }
-      return true;
+      return false;
     } catch (e) {
-      print("Error in login");
+      // print("Error in login");
       print(e);
+      return false;
     }
-    return true;
   }
-
-  // LocalStorage storage = LocalStorage("usertoken");
 
   Future<bool> registerNow(
       String username, String password, String email) async {
@@ -50,7 +47,7 @@ class UserState with ChangeNotifier {
         }),
       );
       var data = json.decode(response.body) as Map;
-      print(data);
+      // print(data);
       return data['error'];
     } catch (e) {
       print("Error in register");

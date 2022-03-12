@@ -54,7 +54,7 @@ class CartProduct(models.Model):
     subtotal = models.PositiveIntegerField()
 
     def __str__(self):
-        return f"Cart == {self.cart.id}<==>CartProduct:{self.id} == Quality == {self.quantity}"
+        return f"Cart == {self.cart.id}<==>CartProduct:{self.id} == Quantity == {self.quantity}"
 
 class Order(models.Model):
     cart = models.OneToOneField(Cart, on_delete=models.CASCADE)

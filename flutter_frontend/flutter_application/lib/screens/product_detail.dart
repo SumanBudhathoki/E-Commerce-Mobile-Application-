@@ -1,20 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/state/cart_state.dart';
 import 'package:flutter_application/state/product_state.dart';
 import 'package:flutter_application/theme.dart';
 import 'package:provider/provider.dart';
+import 'cart.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   static const routeName = "/product--details-screen";
-  const ProductDetailScreen({Key? key}) : super(key: key);
+
+  const ProductDetailScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final id = ModalRoute.of(context)?.settings.arguments;
+    final id = ModalRoute.of(context)!.settings.arguments;
     final product = Provider.of<ProductState>(context).singleProduct(id);
+    final cart = Provider.of<CartState>(context).cartModel;
     return Scaffold(
-      appBar: AppBar(title: Text("Product Details")),
+      appBar: AppBar(
+        title: const Text("Product Details"),
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+          FlatButton.icon(
+            onPressed: () {
+              Navigator.of(context).pushNamed(CartScreen.routeName);
+            },
+            icon: const Icon(
+              Icons.shopping_cart,
+              color: Colors.white,
+            ),
+            label: Text(
+              cart != null ? "${cart.cartproducts?.length}" : '',
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          )
+        ],
+      ),
       body: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: SingleChildScrollView(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -34,7 +60,10 @@ class ProductDetailScreen extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    Provider.of<CartState>(context, listen: false)
+                        .addtoCart(id!);
+                  },
                   icon: const Icon(Icons.shopping_cart),
                   label: const Text("Add to Cart"),
                 )

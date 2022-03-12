@@ -1,3 +1,4 @@
+from attr import field
 from rest_framework import serializers
 from .models import *
 from django.contrib.auth import get_user_model
@@ -9,7 +10,7 @@ User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'password', 'email',)
+        fields = ('id', 'username', 'password', 'email')
         extra_kwargs = {'password': {"write_only": True, 'required': True}}
 
     def create(self, validated_data):
@@ -22,5 +23,20 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = "__all__"
         depth = 1
-        
-        
+
+class CartSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cart
+        fields = "__all__"
+
+class CartProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CartProduct
+        fields = "__all__"
+        depth = 1
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = "__all__"
+        depth = 1
