@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/screens/addproduct.dart';
 import 'package:flutter_application/screens/favourite.dart';
 import 'package:flutter_application/screens/homescreen.dart';
 import 'package:flutter_application/screens/login.dart';
@@ -63,6 +64,17 @@ class _AppDrawerState extends State<AppDrawer> {
               color: Colors.blue,
             ),
             title: const Text("Order History"),
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(AddProductScreen.routeName);
+            },
+            trailing: const Icon(
+              Icons.create,
+              color: Colors.blue,
+            ),
+            title: const Text("Post Ads"),
           ),
           const Spacer(),
           const Divider(

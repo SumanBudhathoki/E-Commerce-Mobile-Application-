@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/models/cart.dart';
 import 'package:flutter_application/screens/homescreen.dart';
+import 'package:flutter_application/screens/order_screen.dart';
 import 'package:flutter_application/state/cart_state.dart';
 import 'package:provider/provider.dart';
 
@@ -48,7 +49,12 @@ class CartScreen extends StatelessWidget {
                 Text("Total : Rs ${cart.total}"),
                 Text("Data : ${cart.date}"),
                 ElevatedButton(
-                  onPressed: cart.cartproducts!.isEmpty ? null : () {},
+                  onPressed: cart.cartproducts!.isEmpty
+                      ? null
+                      : () {
+                          Navigator.of(context)
+                              .pushNamed(OrderScreen.routeName);
+                        },
                   child: const Text("Order"),
                   style: ElevatedButton.styleFrom(
                     primary: Colors.blue[500],

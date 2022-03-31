@@ -1,7 +1,10 @@
+from ast import Try
+import email
 from math import prod
 from urllib import response
 
 from numpy import product, quantile
+from sklearn import tree
 from .serializers import * #serializers that we created 
 from .models import *
 from rest_framework.views import APIView #Class based views
@@ -278,3 +281,30 @@ class DeleteAllCart(APIView):
             response_msg = {'error': True}
         return Response(response_msg)
 
+class OrderCreateView(APIView):
+    permission_classes = [IsAuthenticated, ]
+    authentication_classes = [TokenAuthentication, ]
+
+    def post(self, request):
+        try:
+            data = request.data
+            cart_id = data['cartid']
+            address = data['address']
+            email = data['email']
+            phone = data['phone']
+            cart_obj = Cart.objects.get(id= cart_id)
+            cart_obj.isComplete = True
+            cart_obj.save()
+            Order.objects.create(
+                cart = cart_obj,
+                email = email,
+                address = address, 
+                phone = phone,
+            )
+            response_msg = {"error": False, "message": "Your Order is Completed."}
+
+        except:
+            response_msg = {"error": True, "message": "Something is wrong! Please try again later."}
+
+        return Response(response_msg)
+    

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/screens/addproduct.dart';
 import 'package:flutter_application/screens/cart.dart';
 import 'package:flutter_application/screens/favourite.dart';
 import 'package:flutter_application/screens/homescreen.dart';
@@ -61,6 +62,7 @@ class MyApp extends StatelessWidget {
           ProductDetailScreen.routeName: (context) =>
               const ProductDetailScreen(),
           FavouriteScreen.routeName: (context) => const FavouriteScreen(),
+          AddProductScreen.routeName: (context) => const AddProductScreen(),
           CartScreen.routeName: (context) => const CartScreen(),
           OrderScreen.routeName: (context) => const OrderScreen(),
           OrderHistoryScreen.routeName: (context) => const OrderHistoryScreen(),

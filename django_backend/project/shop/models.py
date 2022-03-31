@@ -1,11 +1,7 @@
-from distutils.command.upload import upload
-from pyexpat import model
-from unicodedata import category
 from django.db import models
 from django.contrib.auth.models import User
-from matplotlib import image
-from matplotlib.pyplot import title
-from numpy import true_divide
+
+
 # Create your models here.
 
 

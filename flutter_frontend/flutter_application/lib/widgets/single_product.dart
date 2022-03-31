@@ -3,6 +3,8 @@ import 'package:flutter_application/screens/product_detail.dart';
 import 'package:flutter_application/state/product_state.dart';
 import 'package:provider/provider.dart';
 
+import '../state/cart_state.dart';
+
 class SingleProduct extends StatelessWidget {
   final int id;
   final String title;
@@ -47,9 +49,13 @@ class SingleProduct extends StatelessWidget {
         ),
       ),
       footer: GridTileBar(
-        backgroundColor: Colors.black54,
-        title: Text(title),
-      ),
+          backgroundColor: Colors.black54,
+          title: Text(title),
+          trailing: InkWell(
+              onTap: () {
+                Provider.of<CartState>(context, listen: false).addtoCart(id);
+              },
+              child: Icon(Icons.shopping_cart))),
     );
   }
 }

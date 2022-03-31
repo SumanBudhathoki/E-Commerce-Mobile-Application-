@@ -89,6 +89,41 @@ class CartState with ChangeNotifier {
     }
   }
 
+  Future<bool> orderCart(
+      int? cartid, String email, String address, String phone) async {
+    String url = 'http://10.0.2.2:8000/api/ordernow/';
+    var token = storage.getItem('token');
+    try {
+      http.Response response = await http.post(
+        (Uri.parse(url)),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': "token $token"
+        },
+        body: json.encode({
+          "cartid": cartid,
+          "email": email,
+          "address": address,
+          "phone": phone,
+        }),
+      );
+      var data = json.decode(response.body) as Map;
+      // print(data);
+      if (data['error'] == false) {
+        getCartData();
+        getoldOrders();
+        _cartModel = null;
+        notifyListeners();
+        return true;
+      }
+      return false;
+    } catch (e) {
+      print(e);
+      print("Error in ordernow section of cart");
+      return false;
+    }
+  }
+
   Future<void> deleteCartProduct(id) async {
     String url = 'http://10.0.2.2:8000/api/deletecartproduct/';
     var token = storage.getItem('token');
