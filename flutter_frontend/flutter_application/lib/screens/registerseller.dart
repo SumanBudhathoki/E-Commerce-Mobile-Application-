@@ -4,23 +4,24 @@ import 'package:flutter_application/state/user_state.dart';
 import 'package:flutter_application/theme.dart';
 import 'package:flutter_application/widgets/primary_button.dart';
 import 'package:provider/provider.dart';
-import '../widgets/checkbox.dart';
 import '../widgets/login_option.dart';
 
-class RegisterScreen extends StatefulWidget {
-  static const routeName = 'register-screen';
-  const RegisterScreen({Key? key}) : super(key: key);
+class RegisterScreenSeller extends StatefulWidget {
+  static const routeName = 'register-screen-seller';
+  const RegisterScreenSeller({Key? key}) : super(key: key);
 
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _RegisterScreenState extends State<RegisterScreenSeller> {
   final _form = GlobalKey<FormState>();
   late String _username;
   late String _email;
   late String _password;
   late String _confirmPassword;
+  late String _address;
+  late String _shopName;
 
   void _registerNow() async {
     var isValid = _form.currentState?.validate();
@@ -29,7 +30,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
     _form.currentState?.save();
     bool isRegister = await Provider.of<UserState>(context, listen: false)
-        .registerNow(_username, _confirmPassword, _email);
+        .registerNowSeller(
+            _username, _confirmPassword, _email, _address, _shopName);
     if (isRegister == true) {
       Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
     } else {
@@ -135,10 +137,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   _confirmPassword = v!;
                 },
               ),
+              TextFormField(
+                obscureText: false,
+                decoration: const InputDecoration(
+                  labelText: "Shop Name",
+                ),
+                validator: (v) {
+                  if (v!.isEmpty) {
+                    return 'Enter your shop name';
+                  }
+
+                  return null;
+                },
+                onSaved: (v) {
+                  _shopName = v!;
+                },
+              ),
+              TextFormField(
+                obscureText: false,
+                decoration: const InputDecoration(
+                  labelText: "Address",
+                ),
+                validator: (v) {
+                  if (v!.isEmpty) {
+                    return 'Enter address field';
+                  }
+
+                  return null;
+                },
+                onSaved: (v) {
+                  _address = v!;
+                },
+              ),
               const SizedBox(
                 height: 20,
               ),
-              const CheckBox(text: 'Agree to all the terms and condition'),
               const SizedBox(
                 height: 20,
               ),
@@ -185,4 +218,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
+
+  DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
+        value: item,
+        child: Text(
+          item,
+          style: TextStyle(fontSize: 16),
+        ),
+      );
 }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/models/product.dart';
 import 'package:http/http.dart' as http;
@@ -52,6 +53,41 @@ class ProductState with ChangeNotifier {
     } catch (e) {
       print("Error in favourite");
       print(e);
+    }
+  }
+
+  Future<bool> postads(int? userid, String title, String category, String price,
+      String description, File image) async {
+    String url = 'http://10.0.2.2:8000/api/ordernow/';
+    var token = storage.getItem('token');
+    try {
+      http.Response response = await http.post(
+        (Uri.parse(url)),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': "token $token"
+        },
+        body: json.encode({
+          "userid": userid,
+          "title": title,
+          "category": category,
+          "price": price,
+          "description": description,
+          "image": image,
+        }),
+      );
+      var data = json.decode(response.body) as Map;
+      // print(data);
+      if (data['error'] == false) {
+        getProducts();
+        notifyListeners();
+        return true;
+      }
+      return false;
+    } catch (e) {
+      print(e);
+      print("Error in post ad section ");
+      return false;
     }
   }
 

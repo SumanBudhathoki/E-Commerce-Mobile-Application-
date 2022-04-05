@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/models/cart.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:http/http.dart' as http;
-
 import '../models/order_model.dart';
 
 class CartState with ChangeNotifier {

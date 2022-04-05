@@ -1,8 +1,23 @@
+from tkinter import CASCADE
 from django.db import models
-from django.contrib.auth.models import User
+# from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AbstractUser
 
-
+# User = get_user_model()
 # Create your models here.
+class CustomUser(AbstractUser):
+    is_seller = models.BooleanField('Is Wholesaler', default=False)
+    is_customer = models.BooleanField('Is Retailer', default=True)
+
+
+class Retailer(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    address = models.CharField(max_length=200)
+
+class Wholesaler(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    shop_name = models.CharField(max_length=200)
+    address = models.CharField(max_length=200)
 
 
 class Category (models.Model):
@@ -17,7 +32,6 @@ class Product(models.Model):
     date = models.DateField(auto_now_add= True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     image = models.ImageField(upload_to = "products/")
-    market_price = models.PositiveIntegerField()
     selling_price = models.PositiveIntegerField()
     description = models.TextField()
 
@@ -27,14 +41,14 @@ class Product(models.Model):
 
 class Favourite(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     isFavorite = models.BooleanField(default=False)
 
     def __str__(self):
         return f"productID = {self.product.id} user = {self.user.username}| IsFavourite = {self.isFavorite}"
 
 class Cart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     total = models.PositiveIntegerField()
     isComplete = models.BooleanField(default=False)
     date = models.DateField(auto_now_add=True)

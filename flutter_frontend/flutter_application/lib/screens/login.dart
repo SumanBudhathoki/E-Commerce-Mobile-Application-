@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/screens/homescreen.dart';
-import 'package:flutter_application/screens/register.dart';
+import 'package:flutter_application/screens/registerbuyer.dart';
+import 'package:flutter_application/screens/registerseller.dart';
 import 'package:flutter_application/screens/reset_password.dart';
 import 'package:flutter_application/state/user_state.dart';
 import 'package:flutter_application/theme.dart';
@@ -150,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const RegisterScreen(),
+                          builder: (context) => const RegisterScreenSeller(),
                         ),
                       );
                     },
@@ -171,16 +172,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 25),
                 const LoginOption(),
               ],
-              // Row(
-              //   children: [
-              //     RaisedButton(
-              //       onPressed: () {
-              //         _loginNow();
-              //       },
-              //       child: Text('Login'),
-              //     )
-              //   ],
-              // )
             ),
           ),
         )),

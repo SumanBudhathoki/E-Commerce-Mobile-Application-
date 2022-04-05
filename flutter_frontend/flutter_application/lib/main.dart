@@ -6,7 +6,8 @@ import 'package:flutter_application/screens/homescreen.dart';
 import 'package:flutter_application/screens/order_history_screen.dart';
 import 'package:flutter_application/screens/order_screen.dart';
 import 'package:flutter_application/screens/product_detail.dart';
-import 'package:flutter_application/screens/register.dart';
+import 'package:flutter_application/screens/registerbuyer.dart';
+import 'package:flutter_application/screens/registerseller.dart';
 import 'package:flutter_application/state/cart_state.dart';
 import 'package:flutter_application/state/product_state.dart';
 import 'package:flutter_application/state/user_state.dart';
@@ -67,7 +68,10 @@ class MyApp extends StatelessWidget {
           OrderScreen.routeName: (context) => const OrderScreen(),
           OrderHistoryScreen.routeName: (context) => const OrderHistoryScreen(),
           LoginScreen.routeName: (context) => const LoginScreen(),
-          RegisterScreen.routeName: (context) => const RegisterScreen(),
+          RegisterScreenRetailer.routeName: (context) =>
+              const RegisterScreenRetailer(),
+          RegisterScreenSeller.routeName: (context) =>
+              const RegisterScreenSeller(),
         },
       ),
     );

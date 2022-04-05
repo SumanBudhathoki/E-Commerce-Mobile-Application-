@@ -32,7 +32,7 @@ class UserState with ChangeNotifier {
   }
 
   Future<bool> registerNow(
-      String username, String password, String email) async {
+      String username, String password, String email, String address) async {
     try {
       String url = 'http://10.0.2.2:8000/api/register/';
       http.Response response = await http.post(
@@ -44,6 +44,34 @@ class UserState with ChangeNotifier {
           'username': username,
           'password': password,
           'email': email,
+          'address': address,
+        }),
+      );
+      var data = json.decode(response.body) as Map;
+      // print(data);
+      return data['error'];
+    } catch (e) {
+      print("Error in register");
+      print(e);
+      return true;
+    }
+  }
+
+  Future<bool> registerNowSeller(String username, String password, String email,
+      String address, String shopName) async {
+    try {
+      String url = 'http://10.0.2.2:8000/api/register/seller/';
+      http.Response response = await http.post(
+        (Uri.parse(url)),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: json.encode({
+          'username': username,
+          'password': password,
+          'email': email,
+          'address': address,
+          'shopName': shopName,
         }),
       );
       var data = json.decode(response.body) as Map;

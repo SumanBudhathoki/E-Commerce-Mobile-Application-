@@ -43,5 +43,12 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>To choose your profile image</string>
+	<key>NSCameraUsageDescription</key>
+	<string>To take user profile image</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Used to capture audo for image picker plugin</string>
+
 </dict>
 </plist>

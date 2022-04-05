@@ -1,10 +1,4 @@
-from ast import Try
-import email
-from math import prod
-from urllib import response
-
-from numpy import product, quantile
-from sklearn import tree
+from unicodedata import category
 from .serializers import * #serializers that we created 
 from .models import *
 from rest_framework.views import APIView #Class based views
@@ -13,23 +7,57 @@ from rest_framework import status #Status code for imformative response
 from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.parsers import JSONParser 
 
 
-class UserRegistration(APIView):
-    #To access the list of all registered users
-
-    def get(self, format= None):
-        users = User.objects.all()
-        serializer = UserSerializer(users,  many = True)
-        return Response(serializer.data)
-
+class UserRegistration(APIView):    
     # To create the user
     def post(self, request):
-
-        
+        data = request.data
         serializer = UserSerializer(data = request.data)
+        print(serializer)
         if serializer.is_valid():
             serializer.save()
+            user = CustomUser.objects.get(username = serializer.data['username'])
+            address = data['address']
+            buyer = Retailer.objects.create(
+                user = user,
+                address = address
+            )
+            buyer.save()
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED
+            )
+        return Response(
+            {
+                "error" : True,
+                "error_msg": serializer.error_messages,
+            },
+            status=status.HTTP_400_BAD_REQUEST
+        )
+class UserRegistrationSeller(APIView):
+    # To create the user
+    def post(self, request):
+        data = request.data
+        
+        serializer = UserSerializer(data = request.data)
+        # print(serializer)
+        if serializer.is_valid():  
+            serializer.save()
+            user = CustomUser.objects.get(username = serializer.data['username'])
+            address = data['address']
+            shopName = data['shopName']
+            
+            seller = Wholesaler.objects.create(
+                user = user,
+                address = address,
+                shop_name = shopName
+            )            
+            seller.save()
+            user_id = seller.user.id            
+            CustomUser.objects.filter(id = user_id).update(is_seller = True)
+
             return Response(
                 serializer.data,
                 status=status.HTTP_201_CREATED
@@ -59,6 +87,48 @@ class ProductView(APIView):
                 product['favourite'] = False
             data.append(product)
         return Response(data)
+
+    def post(self, request):
+        
+        try:
+        #     data = JSONParser().parse(request)
+        #     product_serializer = Product(data = data)
+        #     if product_serializer.is_valid():
+        #         product_serializer.save()
+        #         return Response(
+        #             product_serializer.data,
+        #             status=status.HTTP_201_CREATED
+        #         )
+        # except:
+        #      return Response(
+        #     {
+        #         "error" : True,
+        #         "error_msg": product_serializer.data,
+        #     },
+            
+        # )
+            data = request.data
+            title = data['title']
+            category = data['category']
+            selling_price = data['selling_price']
+            description = data['description']
+            image = data['image']
+            Product.objects.create(
+                title = title,
+                category = category,
+                selling_price = selling_price,
+                description = description,
+                image = image
+                
+            )
+            response_msg = {"error": False, "message": "Your Post is Completed."}
+
+        except:
+            response_msg = {"error": True, "message": "Something is wrong! Please try again later."}
+
+        return Response(response_msg)
+    
+            
 
 class FavouriteView(APIView):
     permission_classes = [IsAuthenticated]
@@ -120,61 +190,6 @@ class OrderView(APIView):
             response_msg = {"error": True, "data": "No data available"}
         return Response(response_msg)            
 
-# class AddToCart(APIView):
-#     permission_classes = [IsAuthenticated]
-#     authentication_classes = [TokenAuthentication]
-
-#     def post(self, request):
-#         product_id = request.data['id']
-#         product_obj = Product.objects.get(id = product_id)
-#         print(product_obj, "product_obj")
-#         cart = Cart.objects.filter(user = request.user).filter(isComplete= False).first()
-#         cart_product_obj = CartProduct.objects.filter(product_id = product_id).first()
-
-#         try:
-#             if cart:
-#                 print(cart)
-#                 print("Old Cart")
-#                 this_product_in_cart = cart.cartproduct_set.filter(
-#                     product= product_obj
-#                 )
-#                 if this_product_in_cart.exists():
-#                     cartproduct = CartProduct.objects.filter(product= product_obj).filter(cart__iscomplete = False).first()
-#                     cartproduct.quantity += 1
-#                     cartproduct.subtotal += product_obj.selling_price
-#                     cartproduct.save()
-#                     cart.total += product_obj.selling_price
-#                     cart.save()
-#                 else:
-#                     print("New Cart Product Created in Old cart")
-#                     cartproduct_new = CartProduct.objects.create(
-#                         cart= cart,
-#                         price = product_obj.selling_price,
-#                         quantity = 1,
-#                         subtotal = product_obj.selling_price
-#                     )
-#                     cartproduct_new.product.add(product_obj)
-#                     cart.total += product_obj.selling_price
-#                     cart.save()
-#             else:
-#                 Cart.objects.create(user = request.user, total = 0, isComplete=False)
-#                 new_cart = Cart.objects.filter(user= request.user).filter(isComplete= False).first()
-#                 cart_product_new = CartProduct.objects.create(
-#                     cart=new_cart,
-#                     price=product_obj.selling_price,
-#                     quantity=1,
-#                     subtotal=product_obj.selling_price
-#                 )
-#                 cart_product_new.product.add(product_obj)
-#                 new_cart.total += product_obj.selling_price
-#                 new_cart.save()
-#                 response_mesage = {
-#                 'error': False, 'message': "Product added to card successfully", "productid": product_id}
-#         except:
-#             response_mesage = {
-#                 "error": True, "message":"There is some problem adding product in the cart"
-#             }
-#         return Response(response_mesage)
 
 class AddToCart(APIView):
     permission_classes = [IsAuthenticated, ]

@@ -144,4 +144,5 @@ REST_FRAMEWORK = {
     ),
 }
 
+AUTH_USER_MODEL = 'shop.CustomUser'
 # django_heroku.settings(locals())
