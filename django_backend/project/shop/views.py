@@ -1,4 +1,4 @@
-from unicodedata import category
+from rest_framework import generics, filters
 from .serializers import * #serializers that we created 
 from .models import *
 from rest_framework.views import APIView #Class based views
@@ -7,7 +7,7 @@ from rest_framework import status #Status code for imformative response
 from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.parsers import JSONParser 
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 
 class UserRegistration(APIView):    
@@ -69,11 +69,18 @@ class UserRegistrationSeller(APIView):
             },
             status=status.HTTP_400_BAD_REQUEST
         )
+class ProductSearchView(generics.ListCreateAPIView):
+    search_fields = ['title']
+    filter_backends = (filters.SearchFilter,)
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
 
 class ProductView(APIView):
     permission_classes = [IsAuthenticated, ]
     authentication_classes = [TokenAuthentication,]
     def get(self, request):
+        # search_fields = ['title', 'selling_price']
+        # filter_backend = (filter.SearchFilter,)
         query = Product.objects.all()
         data = []
         serializers = ProductSerializer(query, many = True)
@@ -88,46 +95,21 @@ class ProductView(APIView):
             data.append(product)
         return Response(data)
 
-    def post(self, request):
+class ProductAddView(ListCreateAPIView):
+    permission_classes = [IsAuthenticated, ]
+    authentication_classes = [TokenAuthentication,]
+    try:
+        serializer_class = ProductSerializer
+
+        def perform_create(self, serializer):
+            serializer.save()
+            response_msg = {'error': False}
+            return Response(response_msg)       
+    except:
+        response_msg = {'error': True}
         
-        try:
-        #     data = JSONParser().parse(request)
-        #     product_serializer = Product(data = data)
-        #     if product_serializer.is_valid():
-        #         product_serializer.save()
-        #         return Response(
-        #             product_serializer.data,
-        #             status=status.HTTP_201_CREATED
-        #         )
-        # except:
-        #      return Response(
-        #     {
-        #         "error" : True,
-        #         "error_msg": product_serializer.data,
-        #     },
-            
-        # )
-            data = request.data
-            title = data['title']
-            category = data['category']
-            selling_price = data['selling_price']
-            description = data['description']
-            image = data['image']
-            Product.objects.create(
-                title = title,
-                category = category,
-                selling_price = selling_price,
-                description = description,
-                image = image
-                
-            )
-            response_msg = {"error": False, "message": "Your Post is Completed."}
-
-        except:
-            response_msg = {"error": True, "message": "Something is wrong! Please try again later."}
-
-        return Response(response_msg)
-    
+    # def get_queryset(self):
+    #     return Product.objects.all()
             
 
 class FavouriteView(APIView):

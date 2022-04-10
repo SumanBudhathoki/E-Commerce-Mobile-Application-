@@ -56,9 +56,9 @@ class ProductState with ChangeNotifier {
     }
   }
 
-  Future<bool> postads(int? userid, String title, String category, String price,
-      String description, File image) async {
-    String url = 'http://10.0.2.2:8000/api/ordernow/';
+  Future<bool> postads(
+      String? title, String? price, String? description, File? image) async {
+    String url = 'http://10.0.2.2:8000/api/products_add/';
     var token = storage.getItem('token');
     try {
       http.Response response = await http.post(
@@ -68,16 +68,14 @@ class ProductState with ChangeNotifier {
           'Authorization': "token $token"
         },
         body: json.encode({
-          "userid": userid,
           "title": title,
-          "category": category,
-          "price": price,
-          "description": description,
+          "selling_price": price,
           "image": image,
+          "description": description
         }),
       );
       var data = json.decode(response.body) as Map;
-      // print(data);
+      print(data);
       if (data['error'] == false) {
         getProducts();
         notifyListeners();

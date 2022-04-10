@@ -30,8 +30,8 @@ class Category (models.Model):
 class Product(models.Model):
     title = models.CharField(max_length=100)
     date = models.DateField(auto_now_add= True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to = "products/")
+    # category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to = "products/",blank=True, null=True )
     selling_price = models.PositiveIntegerField()
     description = models.TextField()
 

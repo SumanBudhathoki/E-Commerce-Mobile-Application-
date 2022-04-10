@@ -23,7 +23,11 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = "__all__"
-        depth = 1
+        # depth = 1
+
+    def create(self, validated_data):
+        return Product.objects.create(**validated_data)
+         
 
 class CartSerializer(serializers.ModelSerializer):
     class Meta:

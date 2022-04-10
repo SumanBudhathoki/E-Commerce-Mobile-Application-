@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/screens/cart.dart';
+import 'package:flutter_application/screens/search.dart';
 import 'package:flutter_application/state/cart_state.dart';
 import 'package:flutter_application/state/product_state.dart';
 import 'package:flutter_application/widgets/app_drawer.dart';
@@ -48,7 +49,14 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           title: const Text('HomeScreen'),
           actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SearchPage()));
+                },
+                icon: const Icon(Icons.search)),
             FlatButton.icon(
               onPressed: () {
                 Navigator.of(context).pushNamed(CartScreen.routeName);
