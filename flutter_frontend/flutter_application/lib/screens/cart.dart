@@ -5,14 +5,17 @@ import 'package:flutter_application/screens/order_screen.dart';
 import 'package:flutter_application/state/cart_state.dart';
 import 'package:provider/provider.dart';
 
+import '../state/product_state.dart';
+
 class CartScreen extends StatelessWidget {
   static const routeName = '/cart-screen';
   const CartScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // final id = ModalRoute.of(context)!.settings.arguments;
+    final product = Provider.of<ProductState>(context).product;
     final cart = Provider.of<CartState>(context).cartModel;
+
     if (cart == null) {
       return Scaffold(
         appBar: AppBar(
@@ -81,36 +84,47 @@ class CartScreen extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
+                shrinkWrap: true,
                 itemCount: cart.cartproducts!.length,
                 itemBuilder: (context, i) {
                   var item = cart.cartproducts![i];
-                  return Card(
-                      child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("${item.product![0].title}"),
-                            Text("Price : Rs ${item.price}"),
-                            Text("Quantity : ${item.quantity}")
-                          ],
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                    child: ListTile(
+                      leading: SizedBox(
+                        height: 100,
+                        width: 100,
+                        child: Image.network(
+                          "http://10.0.2.2:8000${product[i].image}",
+                          fit: BoxFit.contain,
                         ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Provider.of<CartState>(context, listen: false)
-                                .deleteCartProduct(item.id);
-                          },
-                          child: const Text("Delete"),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.red[500],
+                      ),
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("${item.product![0].title}"),
+                              Text("Price : Rs ${item.price}"),
+                              Text("Quantity : ${item.quantity}"),
+                            ],
                           ),
-                        ),
-                      ],
+                          IconButton(
+                            onPressed: () {
+                              Provider.of<CartState>(context, listen: false)
+                                  .deleteCartProduct(item.id);
+                            },
+                            icon: const Icon(Icons.delete),
+                            // child: const Text("Delete"),
+                            // style: ElevatedButton.styleFrom(
+                            //   primary: Colors.red[500],
+                            // ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ));
+                  );
                 },
               ),
             )

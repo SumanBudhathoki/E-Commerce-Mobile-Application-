@@ -5,9 +5,6 @@ import 'package:flutter_application/screens/search_service.dart';
 import 'package:flutter_application/state/cart_state.dart';
 import 'package:provider/provider.dart';
 
-import '../state/product_state.dart';
-import '../widgets/single_product.dart';
-
 // import 'package:flutter_search/services/search_service.dart';
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -78,42 +75,51 @@ class _SearchPageState extends State<SearchPage> {
 
   Widget buildResultCard(data) {
     int id = data['id'];
-    var image = data['image'];
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            onTap: () {
-              Navigator.of(context).pushNamed(
-                ProductDetailScreen.routeName,
-                arguments: data['id'],
-              );
-            },
-            title: Text(data['title']),
-            subtitle: Text(data['selling_price'].toString()),
-            leading: Image.network(
-              data['image'],
-            ),
-            trailing: IconButton(
-              icon: Icon(Icons.shopping_cart),
-              onPressed: () {
-                Provider.of<CartState>(context, listen: false).addtoCart(id);
-                final snackBar = SnackBar(
-                  content: const Text('Hi, I am a SnackBar!'),
-                  backgroundColor: (Colors.black12),
-                  action: SnackBarAction(
-                    label: 'dismiss',
-                    onPressed: () {},
-                  ),
+      child: Builder(builder: (context) {
+        return Column(
+          children: <Widget>[
+            ListTile(
+              onTap: () {
+                Navigator.of(context).pushNamed(
+                  ProductDetailScreen.routeName,
+                  arguments: data['id'],
                 );
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
               },
+              title: Text(data['title']),
+              subtitle: Text(data['selling_price'].toString()),
+              leading: Image.network(
+                data['image'],
+              ),
+              trailing: IconButton(
+                icon: Icon(Icons.shopping_cart),
+                onPressed: () {
+                  showSnackBar(context);
+                  Provider.of<CartState>(context, listen: false).addtoCart(id);
+                  // showToast();
+                },
+              ),
             ),
-          ),
-          const Divider(color: Colors.black)
-        ],
-      ),
+            const Divider(color: Colors.black)
+          ],
+        );
+      }),
     );
   }
+}
+
+void showSnackBar(BuildContext context) {
+  final snackBar = SnackBar(
+    content: const Text(
+      'Item added successfully !',
+      style: TextStyle(fontSize: 16),
+    ),
+    // action: SnackBarAction(
+    //   label: "Undo",
+    //   onPressed: () {},
+    // ),
+  );
+  Scaffold.of(context).showSnackBar(snackBar);
 }
