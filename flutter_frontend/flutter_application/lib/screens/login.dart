@@ -144,8 +144,31 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 15,
                 ),
+                Text(
+                  'New to this app? ',
+                  style: subTitle,
+                ),
                 Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                  Text('New to this app? ', style: subTitle),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RegisterScreenRetailer(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'Retailer',
+                      style: textButton.copyWith(
+                        decoration: TextDecoration.underline,
+                        decorationThickness: 1,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
                   InkWell(
                     onTap: () {
                       Navigator.push(
@@ -156,7 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       );
                     },
                     child: Text(
-                      'Register',
+                      'Wholesaler',
                       style: textButton.copyWith(
                         decoration: TextDecoration.underline,
                         decorationThickness: 1,

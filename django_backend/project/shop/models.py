@@ -14,10 +14,16 @@ class Retailer(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     address = models.CharField(max_length=200)
 
+    def __str__(self):
+        return self.user
+
 class Wholesaler(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     shop_name = models.CharField(max_length=200)
     address = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.user
 
 
 class Category (models.Model):
@@ -30,7 +36,7 @@ class Category (models.Model):
 class Product(models.Model):
     title = models.CharField(max_length=100)
     date = models.DateField(auto_now_add= True)
-    # category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     image = models.ImageField(upload_to = "products/",blank=True, null=True )
     selling_price = models.PositiveIntegerField()
     description = models.TextField()
