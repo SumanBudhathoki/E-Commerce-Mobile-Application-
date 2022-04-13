@@ -95,7 +95,7 @@ class CartScreen extends StatelessWidget {
                         height: 100,
                         width: 100,
                         child: Image.network(
-                          "http://10.0.2.2:8000${product[i].image}",
+                          "http://10.0.2.2:8000${cart.cartproducts![i].product![0].image}",
                           fit: BoxFit.contain,
                         ),
                       ),

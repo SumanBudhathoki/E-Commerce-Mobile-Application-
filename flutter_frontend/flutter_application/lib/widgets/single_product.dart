@@ -39,6 +39,7 @@ class SingleProduct extends StatelessWidget {
             ProductDetailScreen.routeName,
             arguments: id,
           );
+          print(id);
         },
         child: Padding(
           padding: const EdgeInsets.all(10.0),
