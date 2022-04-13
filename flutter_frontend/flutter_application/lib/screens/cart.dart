@@ -71,6 +71,7 @@ class CartScreen extends StatelessWidget {
                                   listen: false)
                               .deleteAllCart(cart.id);
                           if (isdelete) {
+                            // cart.total = 0;
                             Navigator.of(context)
                                 .pushReplacementNamed(HomeScreen.routeName);
                           }

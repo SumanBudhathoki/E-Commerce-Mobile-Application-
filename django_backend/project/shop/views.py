@@ -205,7 +205,7 @@ class AddToCart(APIView):
                 if this_product_in_cart.exists():
                     cartprod_uct = CartProduct.objects.filter(
                         product=product_obj).filter(cart__isComplete=False).first()
-                    cartprod_uct.quantity += 1
+                    cartprod_uct.quantity = cartprod_uct.quantity + 1
                     cartprod_uct.subtotal += product_obj.selling_price
                     cartprod_uct.save()
                     cart_cart.total += product_obj.selling_price
@@ -283,6 +283,7 @@ class DeleteAllCart(APIView):
         try:
             cart_obj = Cart.objects.get(id=cart_id)
             cart_obj.delete()
+            
             response_msg = {'error': False}
         except:
             response_msg = {'error': True}

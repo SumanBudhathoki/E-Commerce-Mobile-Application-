@@ -165,7 +165,7 @@ class CartState with ChangeNotifier {
       // print(data);
       if (data['error'] == false) {
         getCartData();
-        // _cartModel = null;
+        _cartModel = null;
         notifyListeners();
 
         return true;
