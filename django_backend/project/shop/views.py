@@ -110,6 +110,16 @@ class ProductAddView(ListCreateAPIView):
         
     # def get_queryset(self):
     #     return Product.objects.all()
+
+class CategoryView(APIView):
+    permission_classes = [IsAuthenticated, ]
+    authentication_classes = [TokenAuthentication, ]
+
+    def get(self, request):
+        query = Category.objects.all()
+        serializer = CategorySerializer(query, many=True)
+        return Response(serializer.data)
+
             
 
 class FavouriteView(APIView):

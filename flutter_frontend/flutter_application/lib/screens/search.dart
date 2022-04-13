@@ -29,53 +29,49 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Search"),
-          centerTitle: true,
-        ),
-        body: ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: TextField(
-                onChanged: (val) {
-                  searchResults.clear();
-                  searchDjango(val);
-                },
-                decoration: InputDecoration(
-                    contentPadding: EdgeInsets.only(left: 25),
-                    hintText: 'Search hear',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4.0),
-                    ),
-                    suffixIcon: IconButton(
-                      icon: Icon(Icons.search),
-                      onPressed: () {},
-                    )),
-              ),
-            ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: searchResults.length,
-              itemBuilder: (BuildContext context, int index) {
-                return buildResultCard(searchResults[index]);
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Search"),
+        centerTitle: true,
+      ),
+      body: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: TextField(
+              onChanged: (val) {
+                searchResults.clear();
+                searchDjango(val);
               },
-            )
-          ],
-        ),
+              decoration: InputDecoration(
+                  contentPadding: EdgeInsets.only(left: 25),
+                  hintText: 'Search hear',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4.0),
+                  ),
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () {},
+                  )),
+            ),
+          ),
+          const SizedBox(
+            height: 10.0,
+          ),
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: searchResults.length,
+            itemBuilder: (BuildContext context, int index) {
+              return buildResultCard(searchResults[index]);
+            },
+          )
+        ],
       ),
     );
   }
 
   Widget buildResultCard(data) {
     int id = data['id'];
-
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Builder(builder: (context) {
@@ -113,7 +109,7 @@ class _SearchPageState extends State<SearchPage> {
 void showSnackBar(BuildContext context) {
   final snackBar = SnackBar(
     content: const Text(
-      'Item added successfully !',
+      'Item added to cart successfully !',
       style: TextStyle(fontSize: 16),
     ),
     // action: SnackBarAction(

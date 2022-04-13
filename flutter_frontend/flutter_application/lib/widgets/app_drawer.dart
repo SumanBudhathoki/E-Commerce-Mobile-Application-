@@ -3,6 +3,7 @@ import 'package:flutter_application/screens/addproduct.dart';
 import 'package:flutter_application/screens/favourite.dart';
 import 'package:flutter_application/screens/homescreen.dart';
 import 'package:flutter_application/screens/login.dart';
+import 'package:flutter_application/screens/stipe_payment.dart';
 import 'package:localstorage/localstorage.dart';
 
 import '../screens/order_history_screen.dart';
@@ -75,6 +76,17 @@ class _AppDrawerState extends State<AppDrawer> {
               color: Colors.blue,
             ),
             title: const Text("Post Ads"),
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(StripePayment.routeName);
+            },
+            trailing: const Icon(
+              Icons.payment,
+              color: Colors.blue,
+            ),
+            title: const Text("Make Payment"),
           ),
           const Spacer(),
           const Divider(

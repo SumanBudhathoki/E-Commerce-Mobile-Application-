@@ -28,7 +28,11 @@ class ProductSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return Product.objects.create(**validated_data)
          
-
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = "__all__"
+        
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart

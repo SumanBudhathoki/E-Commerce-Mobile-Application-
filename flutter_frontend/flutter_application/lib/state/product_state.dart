@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_application/models/category_model.dart';
 import 'package:flutter_application/models/product.dart';
 import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
@@ -8,6 +9,7 @@ import 'package:localstorage/localstorage.dart';
 class ProductState with ChangeNotifier {
   LocalStorage storage = LocalStorage("usertoken");
   List<Product> _products = [];
+  List<Category> _category = [];
 
   Future<bool> getProducts() async {
     String url = 'http://10.0.2.2:8000/api/products';
@@ -30,6 +32,27 @@ class ProductState with ChangeNotifier {
       print("Error in getProducts");
       print(e);
       return false;
+    }
+  }
+
+  Future<void> getCategoryData() async {
+    String url = 'http://10.0.2.2:8000/api/category';
+    var token = storage.getItem('token');
+    try {
+      http.Response response = await http
+          .get(Uri.parse(url), headers: {'Authorization': "token $token"});
+      var data = json.decode(response.body) as List;
+      // print(data);
+      List<Category> temp = [];
+      for (var element in data) {
+        Category category = Category.fromJson(element);
+        temp.add(category);
+      }
+      _category = temp;
+      notifyListeners();
+    } catch (e) {
+      print("Error in get category");
+      print(e);
     }
   }
 
@@ -93,11 +116,19 @@ class ProductState with ChangeNotifier {
     return [..._products];
   }
 
+  List<Category> get category {
+    return [..._category];
+  }
+
   List<Product> get favourites {
     return _products.where((element) => element.favourite == true).toList();
   }
 
   Product singleProduct(id) {
     return _products.firstWhere((element) => element.id == id);
+  }
+
+  List<Product> categorypost(id) {
+    return _products.where((element) => element.category == id).toList();
   }
 }

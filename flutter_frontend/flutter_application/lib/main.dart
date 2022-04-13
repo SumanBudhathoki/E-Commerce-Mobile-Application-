@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/screens/addproduct.dart';
 import 'package:flutter_application/screens/cart.dart';
+import 'package:flutter_application/screens/category.dart';
 import 'package:flutter_application/screens/favourite.dart';
 import 'package:flutter_application/screens/homescreen.dart';
 import 'package:flutter_application/screens/order_history_screen.dart';
@@ -8,14 +9,19 @@ import 'package:flutter_application/screens/order_screen.dart';
 import 'package:flutter_application/screens/product_detail.dart';
 import 'package:flutter_application/screens/registerbuyer.dart';
 import 'package:flutter_application/screens/registerseller.dart';
+import 'package:flutter_application/screens/stipe_payment.dart';
 import 'package:flutter_application/state/cart_state.dart';
 import 'package:flutter_application/state/product_state.dart';
 import 'package:flutter_application/state/user_state.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:provider/provider.dart';
 import 'screens/login.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Stripe.publishableKey =
+      'pk_test_51KnQosJgnzsLEBhImVUvO7rTTyr6lfDs4qb0aLrNDtY0l2IKcZIkZc44VMoWi3isFtF13EbCiOFeljVg420UXLe100n1RZsbla';
   runApp(MyApp());
 }
 
@@ -62,11 +68,13 @@ class MyApp extends StatelessWidget {
           HomeScreen.routeName: (context) => const HomeScreen(),
           ProductDetailScreen.routeName: (context) =>
               const ProductDetailScreen(),
+          CategoryScreen.routeName: (context) => const CategoryScreen(),
           FavouriteScreen.routeName: (context) => const FavouriteScreen(),
           AddProductScreen.routeName: (context) => const AddProductScreen(),
           CartScreen.routeName: (context) => const CartScreen(),
           OrderScreen.routeName: (context) => const OrderScreen(),
           OrderHistoryScreen.routeName: (context) => const OrderHistoryScreen(),
+          StripePayment.routeName: (context) => const StripePayment(),
           LoginScreen.routeName: (context) => const LoginScreen(),
           RegisterScreenRetailer.routeName: (context) =>
               const RegisterScreenRetailer(),

@@ -39,7 +39,9 @@ dependencies:
   localstorage: ^4.0.0+1
   image_picker: ^0.8.4+11
   dio: ^4.0.6
-  
+  flutter_stripe: ^2.4.0
+  # webview_flutter: ^3.0.2
+  esewa_pnp: ^2.0.0  
 
 dev_dependencies:
   flutter_test:
