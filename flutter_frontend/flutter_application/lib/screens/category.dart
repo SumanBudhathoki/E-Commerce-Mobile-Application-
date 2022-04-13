@@ -30,17 +30,20 @@ class _CategoryScreenState extends State<CategoryScreen> {
           body: Column(
             children: [
               Container(
-                height: 70,
+                height: 60,
                 width: double.infinity,
                 color: Colors.blue,
-                child: Center(
-                  child: Text(
-                    category[id - 1].title!,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold),
-                  ),
+                child: Row(
+                  children: [
+                    BackButton(),
+                    Text(
+                      category[id - 1].title!,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
               ),
               const Divider(
@@ -71,10 +74,37 @@ class _CategoryScreenState extends State<CategoryScreen> {
         ),
       );
     } else {
-      return const Scaffold(
-          body: Center(
-        child: Text("No items in this category"),
-      ));
+      return SafeArea(
+        child: Scaffold(
+          body: Container(
+            child: Column(
+              children: [
+                Container(
+                  height: 60,
+                  width: double.infinity,
+                  color: Colors.blue,
+                  child: Row(
+                    children: [
+                      const BackButton(),
+                      Text(
+                        category[id - 1].title!,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 300,
+                ),
+                Text("No items in this category"),
+              ],
+            ),
+          ),
+        ),
+      );
     }
   }
 }

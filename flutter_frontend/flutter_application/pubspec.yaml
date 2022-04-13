@@ -42,6 +42,7 @@ dependencies:
   flutter_stripe: ^2.4.0
   # webview_flutter: ^3.0.2
   esewa_pnp: ^2.0.0  
+  khalti_flutter: ^2.0.2
 
 dev_dependencies:
   flutter_test:

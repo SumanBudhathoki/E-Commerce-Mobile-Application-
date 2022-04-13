@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/screens/cart.dart';
 import 'package:flutter_application/screens/order_history_screen.dart';
+import 'package:flutter_application/screens/payment_selection.dart';
 import 'package:flutter_application/state/cart_state.dart';
 import 'package:flutter_application/widgets/app_drawer.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +30,7 @@ class _OrderScreenState extends State<OrderScreen> {
     var order = await Provider.of<CartState>(context, listen: false)
         .orderCart(cart?.id, _email, _address, _phone);
     if (order) {
-      Navigator.of(context).pushNamed(OrderHistoryScreen.routeName);
+      Navigator.of(context).pushNamed(PaymentOption.routeName);
     }
   }
 

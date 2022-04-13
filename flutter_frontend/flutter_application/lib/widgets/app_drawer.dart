@@ -77,17 +77,6 @@ class _AppDrawerState extends State<AppDrawer> {
             ),
             title: const Text("Post Ads"),
           ),
-          ListTile(
-            onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(StripePayment.routeName);
-            },
-            trailing: const Icon(
-              Icons.payment,
-              color: Colors.blue,
-            ),
-            title: const Text("Make Payment"),
-          ),
           const Spacer(),
           const Divider(
             color: Colors.grey,

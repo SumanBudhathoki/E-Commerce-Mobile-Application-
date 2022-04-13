@@ -6,6 +6,7 @@ import 'package:flutter_application/screens/favourite.dart';
 import 'package:flutter_application/screens/homescreen.dart';
 import 'package:flutter_application/screens/order_history_screen.dart';
 import 'package:flutter_application/screens/order_screen.dart';
+import 'package:flutter_application/screens/payment_selection.dart';
 import 'package:flutter_application/screens/product_detail.dart';
 import 'package:flutter_application/screens/registerbuyer.dart';
 import 'package:flutter_application/screens/registerseller.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_application/screens/stipe_payment.dart';
 import 'package:flutter_application/state/cart_state.dart';
 import 'package:flutter_application/state/product_state.dart';
 import 'package:flutter_application/state/user_state.dart';
+import 'package:khalti_flutter/khalti_flutter.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:provider/provider.dart';
 import 'screens/login.dart';
@@ -45,41 +47,56 @@ class MyApp extends StatelessWidget {
           create: (context) => CartState(),
         )
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(fontFamily: 'Poppins'),
-        home: FutureBuilder(
-          future: storage.ready,
-          builder: (context, snapshot) {
-            if (snapshot.data == null) {
-              return const Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            }
-            if (storage.getItem('token') == null) {
-              return const LoginScreen();
-            }
-            return const HomeScreen();
-          },
-        ),
-        routes: {
-          HomeScreen.routeName: (context) => const HomeScreen(),
-          ProductDetailScreen.routeName: (context) =>
-              const ProductDetailScreen(),
-          CategoryScreen.routeName: (context) => const CategoryScreen(),
-          FavouriteScreen.routeName: (context) => const FavouriteScreen(),
-          AddProductScreen.routeName: (context) => const AddProductScreen(),
-          CartScreen.routeName: (context) => const CartScreen(),
-          OrderScreen.routeName: (context) => const OrderScreen(),
-          OrderHistoryScreen.routeName: (context) => const OrderHistoryScreen(),
-          StripePayment.routeName: (context) => const StripePayment(),
-          LoginScreen.routeName: (context) => const LoginScreen(),
-          RegisterScreenRetailer.routeName: (context) =>
-              const RegisterScreenRetailer(),
-          RegisterScreenSeller.routeName: (context) =>
-              const RegisterScreenSeller(),
+      child: KhaltiScope(
+        publicKey: "test_public_key_3b5bbe2fb6464003a2d1f0356cea8ad9",
+        builder: (BuildContext, navigatorKey) {
+          return MaterialApp(
+            localizationsDelegates: const [
+              KhaltiLocalizations.delegate,
+            ],
+            navigatorKey: navigatorKey,
+            supportedLocales: const [
+              Locale('en', 'US'),
+              Locale('ne', 'NP'),
+            ],
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(fontFamily: 'Poppins'),
+            home: FutureBuilder(
+              future: storage.ready,
+              builder: (context, snapshot) {
+                if (snapshot.data == null) {
+                  return const Scaffold(
+                    body: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                }
+                if (storage.getItem('token') == null) {
+                  return const LoginScreen();
+                }
+                return const HomeScreen();
+              },
+            ),
+            routes: {
+              HomeScreen.routeName: (context) => const HomeScreen(),
+              ProductDetailScreen.routeName: (context) =>
+                  const ProductDetailScreen(),
+              CategoryScreen.routeName: (context) => const CategoryScreen(),
+              FavouriteScreen.routeName: (context) => const FavouriteScreen(),
+              AddProductScreen.routeName: (context) => const AddProductScreen(),
+              CartScreen.routeName: (context) => const CartScreen(),
+              OrderScreen.routeName: (context) => const OrderScreen(),
+              OrderHistoryScreen.routeName: (context) =>
+                  const OrderHistoryScreen(),
+              StripePayment.routeName: (context) => const StripePayment(),
+              LoginScreen.routeName: (context) => const LoginScreen(),
+              RegisterScreenRetailer.routeName: (context) =>
+                  const RegisterScreenRetailer(),
+              RegisterScreenSeller.routeName: (context) =>
+                  const RegisterScreenSeller(),
+              PaymentOption.routeName: (context) => const PaymentOption(),
+            },
+          );
         },
       ),
     );

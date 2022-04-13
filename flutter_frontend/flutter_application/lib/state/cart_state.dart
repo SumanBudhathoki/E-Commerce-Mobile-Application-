@@ -110,7 +110,7 @@ class CartState with ChangeNotifier {
       if (data['error'] == false) {
         getCartData();
         getoldOrders();
-        _cartModel = null;
+        // _cartModel = null;
         notifyListeners();
         return true;
       }
