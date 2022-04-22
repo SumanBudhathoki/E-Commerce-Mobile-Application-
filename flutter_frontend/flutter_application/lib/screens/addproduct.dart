@@ -7,11 +7,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_application/screens/homescreen.dart';
 import 'package:flutter_application/state/product_state.dart';
 import 'package:flutter_application/widgets/app_drawer.dart';
-// import 'package:flutter_application/widgets/img_chooseoption.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:dio/dio.dart';
-import 'package:http_parser/http_parser.dart';
+import 'package:http/http.dart' as http;
 
 class AddProductScreen extends StatefulWidget {
   static const routeName = '/add-product';
@@ -22,14 +20,79 @@ class AddProductScreen extends StatefulWidget {
 }
 
 class _AddProductScreenState extends State<AddProductScreen> {
-  Dio dio = Dio();
   String? _title;
   String? _price;
   String? _description;
-  final category = ['Category 1', 'Category 2'];
-  String? catvalue;
+  String? _catagory;
   File? image;
+  bool showSpinner = false;
   final _form = GlobalKey<FormState>();
+
+  late File selectedImage;
+  var resJson;
+
+  onUploadImage() async {
+    var isValid = _form.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+    _form.currentState!.save();
+    setState(() {
+      showSpinner = true;
+    });
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse("http://10.0.2.2:8000/api/addproducts/"),
+    );
+    Map<String, String> headers = {"Content-type": "multipart/form-data"};
+    request.fields['title'] = _title!;
+    request.fields['selling_price'] = _price!;
+    request.fields['description'] = _description!;
+    request.fields['category'] = _catagory!;
+
+    request.files.add(
+      http.MultipartFile(
+        'image',
+        selectedImage.readAsBytes().asStream(),
+        selectedImage.lengthSync(),
+        filename: selectedImage.path.split('/').last,
+      ),
+    );
+    request.headers.addAll(headers);
+    print("request: " + request.toString());
+    var res = await request.send();
+    http.Response response = await http.Response.fromStream(res);
+    setState(() {
+      resJson = jsonDecode(response.body);
+    });
+    if (response.statusCode == 200) {
+      print("Image uploadded");
+      setState(() {
+        showSpinner = false;
+      });
+    } else {
+      setState(() {
+        showSpinner = false;
+      });
+      print("Image not uploadede");
+    }
+  }
+
+  Future getImage() async {
+    var image = await ImagePicker().getImage(source: ImageSource.gallery);
+
+    setState(() {
+      selectedImage = File(image!.path);
+    });
+  }
+
+  Future getImageCamera() async {
+    var image = await ImagePicker().getImage(source: ImageSource.camera);
+
+    setState(() {
+      selectedImage = File(image!.path);
+    });
+  }
 
   void _postAds() async {
     var isValid = _form.currentState!.validate();
@@ -38,7 +101,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     }
     _form.currentState!.save();
     var order = await Provider.of<ProductState>(context, listen: false)
-        .postads(_title, _price, _description, image);
+        .postads(_title, _price, _description, _catagory, image);
     if (order) {
       Navigator.of(context).pushNamed(HomeScreen.routeName);
     }
@@ -59,6 +122,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final category = Provider.of<ProductState>(context).category;
     return Scaffold(
       appBar: AppBar(
         title: Text("Add Your Product"),
@@ -86,6 +150,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
               const SizedBox(
                 height: 8,
               ),
+
               // DropdownButton<String>(
               //   hint: Text("Select Category"),
               //   value: catvalue,
@@ -97,7 +162,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
               //     color: Colors.grey,
               //   ),
               //   icon: Icon(Icons.arrow_drop_down, color: Colors.black),
-              //   items: category.map(buildMenuItem).toList(),
+              //   items: category.map(buildMenuItem),
               //   onChanged: (String? value) {
               //     setState(() {
               //       catvalue = value;
@@ -105,6 +170,18 @@ class _AddProductScreenState extends State<AddProductScreen> {
               //     });
               //   },
               // ),
+              TextFormField(
+                decoration: InputDecoration(hintText: "Catagory"),
+                validator: (v) {
+                  if (v!.isEmpty) {
+                    return "Enter the price";
+                  }
+                  return null;
+                },
+                onSaved: (v) {
+                  _catagory = v;
+                },
+              ),
               TextFormField(
                 decoration: InputDecoration(hintText: "Price"),
                 validator: (v) {
@@ -163,14 +240,16 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     icon: const Icon(Icons.image_outlined),
                     label: const Text('Gallery'),
                     onPressed: () {
-                      pickImage(ImageSource.gallery);
+                      // pickImage(ImageSource.gallery);
+                      getImage();
                     },
                   ),
                   ElevatedButton.icon(
                     icon: const Icon(Icons.camera_alt),
                     label: const Text('Camera'),
                     onPressed: () {
-                      pickImage(ImageSource.camera);
+                      getImageCamera();
+                      // pickImage(ImageSource.camera);
                     },
                   ),
                 ],
@@ -180,7 +259,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    _postAds();
+                    onUploadImage();
+                    Navigator.of(context).pushNamed(HomeScreen.routeName);
+                    // _postAds();
+                    // print(category[0].title);
                   },
                   child: Text("Submit"))
             ],

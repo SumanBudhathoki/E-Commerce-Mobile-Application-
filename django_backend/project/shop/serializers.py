@@ -49,3 +49,8 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = "__all__"
         depth = 1
+
+class TestImage(serializers.ModelSerializer):
+    class Meta:
+        model = TestImageUpload
+        fields = "__all__"

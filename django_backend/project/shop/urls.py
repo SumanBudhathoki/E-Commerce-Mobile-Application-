@@ -8,6 +8,8 @@ urlpatterns = [
     path('register/', UserRegistration.as_view(), name= 'user_registration'),
     path('register/seller/', UserRegistrationSeller.as_view(), name= 'user_registration_seller'),
     path('products/', ProductView.as_view(),name= 'product_view'),
+    path('addproducts/', ProductAddView.as_view(),name= 'add_product_view'),
+    path('addimage/', TestImageView.as_view(),name= 'add_image_view'),
     path('product_search/', ProductSearchView.as_view(),name= 'product_view_search'),
     path('category/', CategoryView.as_view(),name= 'category_view'),
     path('favourite/',FavouriteView.as_view(), name = 'favourite_view'),
@@ -17,5 +19,4 @@ urlpatterns = [
     path('addtocart/',AddToCart.as_view(), name = 'addtocart_view'),
     path('deletecartproduct/',DeleteCartProduct.as_view(), name = 'delete_cart_product'),
     path('deleteallcart/', DeleteAllCart.as_view(), name= 'delete_all_cart'),
-
 ]

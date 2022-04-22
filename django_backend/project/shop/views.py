@@ -96,8 +96,8 @@ class ProductView(APIView):
         return Response(data)
 
 class ProductAddView(ListCreateAPIView):
-    permission_classes = [IsAuthenticated, ]
-    authentication_classes = [TokenAuthentication,]
+    # permission_classes = [IsAuthenticated, ]
+    # authentication_classes = [TokenAuthentication,]
     try:
         serializer_class = ProductSerializer
 
@@ -110,6 +110,18 @@ class ProductAddView(ListCreateAPIView):
         
     # def get_queryset(self):
     #     return Product.objects.all()
+
+class TestImageView(ListCreateAPIView):
+    try:
+        serializer_class = TestImage
+
+        def perform_create(self, serializer):
+            serializer.save()
+            response_msg = {'error': False}
+            return Response(response_msg)       
+    except:
+        response_msg = {'error': True} 
+        
 
 class CategoryView(APIView):
     permission_classes = [IsAuthenticated, ]

@@ -11,6 +11,7 @@ import 'package:flutter_application/screens/product_detail.dart';
 import 'package:flutter_application/screens/registerbuyer.dart';
 import 'package:flutter_application/screens/registerseller.dart';
 import 'package:flutter_application/screens/stipe_payment.dart';
+import 'package:flutter_application/screens/uploadimage.dart';
 import 'package:flutter_application/state/cart_state.dart';
 import 'package:flutter_application/state/product_state.dart';
 import 'package:flutter_application/state/user_state.dart';
@@ -35,7 +36,6 @@ class MyApp extends StatelessWidget {
     LocalStorage storage = LocalStorage("usertoken");
     return MultiProvider(
       // create: (context) => UserState(),
-
       providers: [
         ChangeNotifierProvider(
           create: (context) => UserState(),
@@ -79,6 +79,7 @@ class MyApp extends StatelessWidget {
             ),
             routes: {
               HomeScreen.routeName: (context) => const HomeScreen(),
+              // HomeScreen.routeName: (context) => const ImageUpload(),
               ProductDetailScreen.routeName: (context) =>
                   const ProductDetailScreen(),
               CategoryScreen.routeName: (context) => const CategoryScreen(),

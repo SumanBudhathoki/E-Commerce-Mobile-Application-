@@ -79,10 +79,11 @@ class ProductState with ChangeNotifier {
     }
   }
 
-  Future<bool> postads(
-      String? title, String? price, String? description, File? image) async {
-    String url = 'http://10.0.2.2:8000/api/products_add/';
+  Future<bool> postads(String? title, String? price, String? description,
+      String? catagory, File? selectedImage) async {
+    String url = 'http://10.0.2.2:8000/api/addproducts/';
     var token = storage.getItem('token');
+
     try {
       http.Response response = await http.post(
         (Uri.parse(url)),
@@ -93,8 +94,8 @@ class ProductState with ChangeNotifier {
         body: json.encode({
           "title": title,
           "selling_price": price,
-          "image": image,
-          "description": description
+          "description": description,
+          "catgory": catagory
         }),
       );
       var data = json.decode(response.body) as Map;

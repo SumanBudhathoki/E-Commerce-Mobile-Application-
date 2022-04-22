@@ -4,6 +4,7 @@ import 'package:flutter_application/screens/search.dart';
 import 'package:flutter_application/screens/stipe_payment.dart';
 import 'package:flutter_application/state/cart_state.dart';
 import 'package:flutter_application/state/product_state.dart';
+import 'package:flutter_application/state/user_state.dart';
 import 'package:flutter_application/widgets/app_drawer.dart';
 import 'package:flutter_application/widgets/single_category.dart';
 import 'package:flutter_application/widgets/single_product.dart';
@@ -39,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final product = Provider.of<ProductState>(context).product;
     final cart = Provider.of<CartState>(context).cartModel;
     final category = Provider.of<ProductState>(context).category;
+
     if (!_isLoading) {
       return Scaffold(
         drawer: const AppDrawer(),
