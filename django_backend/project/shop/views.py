@@ -133,7 +133,6 @@ class CategoryView(APIView):
         return Response(serializer.data)
 
             
-
 class FavouriteView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication]
