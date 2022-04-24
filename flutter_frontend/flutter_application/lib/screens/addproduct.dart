@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application/screens/homescreen.dart';
 import 'package:flutter_application/state/product_state.dart';
+import 'package:flutter_application/widgets/app_drawer-seller.dart';
 import 'package:flutter_application/widgets/app_drawer.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -127,7 +128,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       appBar: AppBar(
         title: Text("Add Your Product"),
       ),
-      drawer: AppDrawer(),
+      drawer: AppDrawerSeller(),
       body: Padding(
         padding: EdgeInsets.all(10),
         child: SingleChildScrollView(

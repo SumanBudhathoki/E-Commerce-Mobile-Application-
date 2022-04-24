@@ -4,6 +4,7 @@ import 'package:flutter_application/screens/cart.dart';
 import 'package:flutter_application/screens/category.dart';
 import 'package:flutter_application/screens/favourite.dart';
 import 'package:flutter_application/screens/homescreen.dart';
+import 'package:flutter_application/screens/myshop.dart';
 import 'package:flutter_application/screens/order_history_screen.dart';
 import 'package:flutter_application/screens/order_screen.dart';
 import 'package:flutter_application/screens/payment_selection.dart';
@@ -79,6 +80,7 @@ class MyApp extends StatelessWidget {
             ),
             routes: {
               HomeScreen.routeName: (context) => const HomeScreen(),
+              MyShop.routeName: (context) => const MyShop(),
               // HomeScreen.routeName: (context) => const ImageUpload(),
               ProductDetailScreen.routeName: (context) =>
                   const ProductDetailScreen(),

@@ -50,7 +50,7 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = "__all__"
         depth = 1
 
-class TestImage(serializers.ModelSerializer):
-    class Meta:
-        model = TestImageUpload
-        fields = "__all__"
+# class TestImage(serializers.ModelSerializer):
+#     class Meta:
+#         model = TestImageUpload
+#         fields = "__all__"

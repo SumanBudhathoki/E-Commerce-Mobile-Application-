@@ -8,6 +8,7 @@ class CustomUser(AbstractUser):
     is_seller = models.BooleanField('Is Wholesaler', default=False)
     is_customer = models.BooleanField('Is Retailer', default=True)
 
+   
 
 class Retailer(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
@@ -39,7 +40,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to = "products/",blank=True, null=True )
     selling_price = models.PositiveIntegerField()
     description = models.TextField()
-
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=1)
     def __str__(self):
         return self.title
 
@@ -77,9 +78,9 @@ class Order(models.Model):
     phone = models.CharField(max_length=13)
     address = models.CharField(max_length=100)
 
-class TestImageUpload(models.Model):
-    title = models.CharField(max_length=100, blank=True, null=True)
-    image = models.ImageField(upload_to = "products/")
+# class TestImageUpload(models.Model):
+#     title = models.CharField(max_length=100, blank=True, null=True)
+#     image = models.ImageField(upload_to = "products/")
 
 
     

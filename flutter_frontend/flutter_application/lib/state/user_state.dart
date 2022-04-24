@@ -19,6 +19,7 @@ class UserState with ChangeNotifier {
             'password': password,
           }));
       var data = json.decode(response.body) as Map;
+      print(data);
       if (data.containsKey('token')) {
         storage.setItem('token', data['token']);
         return true;
@@ -29,6 +30,55 @@ class UserState with ChangeNotifier {
       print(e);
       return false;
     }
+  }
+
+  Future<bool> getUserInfo(String username, String password) async {
+    try {
+      String url = 'http://10.0.2.2:8000/api/api-token-auth/';
+      http.Response response = await http.post((Uri.parse(url)),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: json.encode({
+            'username': username,
+            'password': password,
+          }));
+      var data = json.decode(response.body) as Map;
+      // print(data);
+      if (data['is_seller'] == true) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      print("Error in getting user info");
+      print(e);
+      return false;
+    }
+  }
+
+  Future<int?> getUserId(String username, String password) async {
+    try {
+      String url = 'http://10.0.2.2:8000/api/api-token-auth/';
+      http.Response response = await http.post((Uri.parse(url)),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: json.encode({
+            'username': username,
+            'password': password,
+          }));
+      var data = json.decode(response.body) as Map;
+      // print(data);
+      var id = data['user_id'];
+      print(id);
+
+      // return false;
+    } catch (e) {
+      print("Error in getting user id");
+      print(e);
+      // return false;
+    }
+    // return null;
   }
 
   Future<bool> registerNow(

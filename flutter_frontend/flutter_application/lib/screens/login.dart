@@ -30,8 +30,13 @@ class _LoginScreenState extends State<LoginScreen> {
     _form.currentState?.save();
     bool islogin = await Provider.of<UserState>(context, listen: false)
         .loginNow(_username, _password);
+    dynamic userData = await Provider.of<UserState>(context, listen: false)
+        .getUserInfo(_username, _password);
+    dynamic getUserId = await Provider.of<UserState>(context, listen: false)
+        .getUserId(_username, _password);
     if (islogin) {
-      Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+      Navigator.of(context)
+          .pushReplacementNamed(HomeScreen.routeName, arguments: userData);
     } else {
       showDialog(
           context: context,

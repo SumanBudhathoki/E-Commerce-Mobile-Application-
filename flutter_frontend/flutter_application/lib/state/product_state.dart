@@ -132,4 +132,8 @@ class ProductState with ChangeNotifier {
   List<Product> categorypost(id) {
     return _products.where((element) => element.category == id).toList();
   }
+
+  List<Product> ownerProduct(id) {
+    return _products.where((element) => element.user == id).toList();
+  }
 }
