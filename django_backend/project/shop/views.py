@@ -7,9 +7,23 @@ from rest_framework import status #Status code for imformative response
 from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView
+from rest_framework.authtoken.views import ObtainAuthToken
 
-
+class GetUserData(ObtainAuthToken):
+     def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data,
+                                           context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'user_id': user.pk,
+            'email': user.email,
+            'is_seller': user.is_seller,            
+        })
+ 
 class UserRegistration(APIView):    
     # To create the user
     def post(self, request):
@@ -109,18 +123,18 @@ class ProductAddView(ListCreateAPIView):
         response_msg = {'error': True}
         
     # def get_queryset(self):
-    #     return Product.objects.all()
+    #     return Product.objects.all(/)
 
-class TestImageView(ListCreateAPIView):
-    try:
-        serializer_class = TestImage
+# class TestImageView(ListCreateAPIView):
+#     try:
+#         serializer_class = TestImage
 
-        def perform_create(self, serializer):
-            serializer.save()
-            response_msg = {'error': False}
-            return Response(response_msg)       
-    except:
-        response_msg = {'error': True} 
+#         def perform_create(self, serializer):
+#             serializer.save()
+#             response_msg = {'error': False}
+#             return Response(response_msg)       
+#     except:
+#         response_msg = {'error': True} 
         
 
 class CategoryView(APIView):
