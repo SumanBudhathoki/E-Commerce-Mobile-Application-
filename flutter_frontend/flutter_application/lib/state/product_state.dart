@@ -95,7 +95,7 @@ class ProductState with ChangeNotifier {
           "title": title,
           "selling_price": price,
           "description": description,
-          "catgory": catagory
+          "catgory": catagory,
         }),
       );
       var data = json.decode(response.body) as Map;

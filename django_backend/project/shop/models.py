@@ -1,4 +1,3 @@
-from tkinter import CASCADE
 from django.db import models
 # from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser
@@ -40,7 +39,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to = "products/",blank=True, null=True )
     selling_price = models.PositiveIntegerField()
     description = models.TextField()
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=1)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     def __str__(self):
         return self.title
 

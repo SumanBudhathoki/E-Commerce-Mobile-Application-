@@ -42,9 +42,10 @@ class _HomeScreenState extends State<HomeScreen> {
     final product = Provider.of<ProductState>(context).product;
     final cart = Provider.of<CartState>(context).cartModel;
     final category = Provider.of<ProductState>(context).category;
-
+    String userId = Provider.of<UserState>(context).getId().toString();
     // if (!_isLoading) {
-    print(userData);
+    // print(userData);
+    print(userId);
     if (userData == false) {
       return Scaffold(
         drawer: const AppDrawer(),

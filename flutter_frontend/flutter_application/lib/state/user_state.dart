@@ -6,7 +6,7 @@ import 'package:localstorage/localstorage.dart';
 
 class UserState with ChangeNotifier {
   LocalStorage storage = LocalStorage("usertoken");
-
+  int? id;
   Future<bool> loginNow(String username, String password) async {
     try {
       String url = 'http://10.0.2.2:8000/api/login/';
@@ -69,8 +69,8 @@ class UserState with ChangeNotifier {
           }));
       var data = json.decode(response.body) as Map;
       // print(data);
-      var id = data['user_id'];
-      print(id);
+      id = data['user_id'];
+      // print(id);
 
       // return false;
     } catch (e) {
@@ -132,5 +132,9 @@ class UserState with ChangeNotifier {
       print(e);
       return true;
     }
+  }
+
+  int? getId() {
+    return id;
   }
 }
