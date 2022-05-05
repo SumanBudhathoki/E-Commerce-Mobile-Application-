@@ -12,6 +12,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
+import '../state/user_state.dart';
+
 class AddProductScreen extends StatefulWidget {
   static const routeName = '/add-product';
   const AddProductScreen({Key? key}) : super(key: key);
@@ -26,6 +28,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   String? _description;
   String? _catagory;
   File? image;
+  String? _userId;
   bool showSpinner = false;
   final _form = GlobalKey<FormState>();
 
@@ -50,6 +53,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     request.fields['selling_price'] = _price!;
     request.fields['description'] = _description!;
     request.fields['category'] = _catagory!;
+    request.fields['user'] = _userId!;
 
     request.files.add(
       http.MultipartFile(
@@ -123,6 +127,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final userId = (Provider.of<UserState>(context).getId()).toString();
+    print(userId);
+    // userId1 = userId.toString();
     final category = Provider.of<ProductState>(context).category;
     return Scaffold(
       appBar: AppBar(
@@ -151,7 +158,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
               const SizedBox(
                 height: 8,
               ),
-
               // DropdownButton<String>(
               //   hint: Text("Select Category"),
               //   value: catvalue,
@@ -181,6 +187,18 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 },
                 onSaved: (v) {
                   _catagory = v;
+                },
+              ),
+              TextFormField(
+                decoration: InputDecoration(hintText: "$userId"),
+                validator: (v) {
+                  if (v!.isEmpty) {
+                    return "Enter the userID";
+                  }
+                  return null;
+                },
+                onSaved: (v) {
+                  _userId = v!;
                 },
               ),
               TextFormField(
