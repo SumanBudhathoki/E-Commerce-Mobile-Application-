@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/screens/addproduct.dart';
-import 'package:flutter_application/screens/homescreen.dart';
+import 'package:flutter_application/screens/homepage.dart';
 import 'package:flutter_application/screens/login.dart';
 import 'package:flutter_application/screens/myshop.dart';
 import 'package:localstorage/localstorage.dart';
@@ -33,7 +33,7 @@ class _AppDrawerSellerState extends State<AppDrawerSeller> {
           ),
           ListTile(
             onTap: () {
-              Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+              Navigator.of(context).pushReplacementNamed(HomePage.routeName);
             },
             trailing: const Icon(
               Icons.home,

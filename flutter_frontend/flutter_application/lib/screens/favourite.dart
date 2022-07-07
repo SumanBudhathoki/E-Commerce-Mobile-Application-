@@ -31,6 +31,7 @@ class FavouriteScreen extends StatelessWidget {
             title: favourite[i].title!,
             image: favourite[i].image!,
             favourite: favourite[i].favourite!,
+            sellingPrice: favourite[i].sellingPrice!,
           ),
         ),
       );

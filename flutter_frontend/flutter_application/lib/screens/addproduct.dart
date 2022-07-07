@@ -1,10 +1,9 @@
 // import 'dart:convert';
 import 'dart:convert';
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application/screens/homescreen.dart';
+import 'package:flutter_application/screens/homepage.dart';
 import 'package:flutter_application/state/product_state.dart';
 import 'package:flutter_application/widgets/app_drawer-seller.dart';
 import 'package:flutter_application/widgets/app_drawer.dart';
@@ -108,7 +107,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     var order = await Provider.of<ProductState>(context, listen: false)
         .postads(_title, _price, _description, _catagory, image);
     if (order) {
-      Navigator.of(context).pushNamed(HomeScreen.routeName);
+      Navigator.of(context).pushNamed(HomePage.routeName);
     }
   }
 
@@ -279,7 +278,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
               ElevatedButton(
                   onPressed: () {
                     onUploadImage();
-                    Navigator.of(context).pushNamed(HomeScreen.routeName);
+                    Navigator.of(context).pushNamed(HomePage.routeName);
                     // _postAds();
                     // print(category[0].title);
                   },

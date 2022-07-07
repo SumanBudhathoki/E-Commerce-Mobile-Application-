@@ -66,6 +66,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     title: product[i].title!,
                     image: product[i].image!,
                     favourite: product[i].favourite!,
+                    sellingPrice: product[i].sellingPrice!,
                   ),
                 ),
               ),

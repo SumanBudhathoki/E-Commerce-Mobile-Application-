@@ -49,6 +49,7 @@ class ProductState with ChangeNotifier {
         temp.add(category);
       }
       _category = temp;
+
       notifyListeners();
     } catch (e) {
       print("Error in get category");

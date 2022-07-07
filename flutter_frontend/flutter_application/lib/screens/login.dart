@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/screens/homescreen.dart';
+
 import 'package:flutter_application/screens/registerbuyer.dart';
 import 'package:flutter_application/screens/registerseller.dart';
 import 'package:flutter_application/screens/reset_password.dart';
@@ -8,6 +8,7 @@ import 'package:flutter_application/theme.dart';
 import 'package:provider/provider.dart';
 import '../widgets/login_option.dart';
 import '../widgets/primary_button.dart';
+import 'home.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = '/login-screen';
@@ -36,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
         .getUserId(_username, _password);
     if (islogin) {
       Navigator.of(context)
-          .pushReplacementNamed(HomeScreen.routeName, arguments: userData);
+          .pushReplacementNamed(Home.routeName, arguments: userData);
     } else {
       showDialog(
           context: context,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/models/cart.dart';
-import 'package:flutter_application/screens/homescreen.dart';
+
+import 'package:flutter_application/screens/homepage.dart';
+
 import 'package:flutter_application/screens/order_screen.dart';
 import 'package:flutter_application/state/cart_state.dart';
 import 'package:provider/provider.dart';
@@ -73,7 +74,7 @@ class CartScreen extends StatelessWidget {
                           if (isdelete) {
                             // cart.total = 0;
                             Navigator.of(context)
-                                .pushReplacementNamed(HomeScreen.routeName);
+                                .pushReplacementNamed(HomePage.routeName);
                           }
                         },
                   child: const Text("Delete"),

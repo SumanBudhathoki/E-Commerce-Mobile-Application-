@@ -37,14 +37,11 @@ dependencies:
   provider: ^6.0.2
   http: ^0.13.4
   localstorage: ^4.0.0+1
-  image_picker: ^0.8.4+11
-  dio: ^4.0.6
-  flutter_stripe: ^2.4.0
-  # webview_flutter: ^3.0.2
-  esewa_pnp: ^2.0.0  
+  image_picker: ^0.8.4+11 
   khalti_flutter: ^2.0.2
   modal_progress_hud_nsn: ^0.1.0-nullsafety-1
-  webview_flutter: ^3.0.2
+  carousel_slider: ^4.1.1
+  
 
 dev_dependencies:
   flutter_test:

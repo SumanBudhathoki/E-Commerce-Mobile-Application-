@@ -3,7 +3,8 @@ import 'package:flutter_application/screens/addproduct.dart';
 import 'package:flutter_application/screens/cart.dart';
 import 'package:flutter_application/screens/category.dart';
 import 'package:flutter_application/screens/favourite.dart';
-import 'package:flutter_application/screens/homescreen.dart';
+import 'package:flutter_application/screens/home.dart';
+import 'package:flutter_application/screens/homepage.dart';
 import 'package:flutter_application/screens/myshop.dart';
 import 'package:flutter_application/screens/order_history_screen.dart';
 import 'package:flutter_application/screens/order_screen.dart';
@@ -11,21 +12,16 @@ import 'package:flutter_application/screens/payment_selection.dart';
 import 'package:flutter_application/screens/product_detail.dart';
 import 'package:flutter_application/screens/registerbuyer.dart';
 import 'package:flutter_application/screens/registerseller.dart';
-import 'package:flutter_application/screens/stipe_payment.dart';
-import 'package:flutter_application/screens/uploadimage.dart';
 import 'package:flutter_application/state/cart_state.dart';
 import 'package:flutter_application/state/product_state.dart';
 import 'package:flutter_application/state/user_state.dart';
+import 'package:flutter_application/theme.dart';
 import 'package:khalti_flutter/khalti_flutter.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:provider/provider.dart';
 import 'screens/login.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  Stripe.publishableKey =
-      'pk_test_51KnQosJgnzsLEBhImVUvO7rTTyr6lfDs4qb0aLrNDtY0l2IKcZIkZc44VMoWi3isFtF13EbCiOFeljVg420UXLe100n1RZsbla';
   runApp(MyApp());
 }
 
@@ -61,7 +57,10 @@ class MyApp extends StatelessWidget {
               Locale('ne', 'NP'),
             ],
             debugShowCheckedModeBanner: false,
-            theme: ThemeData(fontFamily: 'Poppins'),
+            theme: ThemeData(
+              fontFamily: 'Poppins',
+              appBarTheme: AppBarTheme(backgroundColor: kPrimaryColor1),
+            ),
             home: FutureBuilder(
               future: storage.ready,
               builder: (context, snapshot) {
@@ -75,11 +74,12 @@ class MyApp extends StatelessWidget {
                 if (storage.getItem('token') == null) {
                   return const LoginScreen();
                 }
-                return const HomeScreen();
+                return const Home();
               },
             ),
             routes: {
-              HomeScreen.routeName: (context) => const HomeScreen(),
+              Home.routeName: (context) => const Home(),
+              HomePage.routeName: (context) => const HomePage(),
               MyShop.routeName: (context) => const MyShop(),
               // HomeScreen.routeName: (context) => const ImageUpload(),
               ProductDetailScreen.routeName: (context) =>
@@ -91,7 +91,6 @@ class MyApp extends StatelessWidget {
               OrderScreen.routeName: (context) => const OrderScreen(),
               OrderHistoryScreen.routeName: (context) =>
                   const OrderHistoryScreen(),
-              StripePayment.routeName: (context) => const StripePayment(),
               LoginScreen.routeName: (context) => const LoginScreen(),
               RegisterScreenRetailer.routeName: (context) =>
                   const RegisterScreenRetailer(),
