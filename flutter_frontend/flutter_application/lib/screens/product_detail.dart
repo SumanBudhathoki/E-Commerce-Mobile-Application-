@@ -6,12 +6,19 @@ import 'package:flutter_application/widgets/primary_button.dart';
 import 'package:provider/provider.dart';
 import 'cart.dart';
 
-class ProductDetailScreen extends StatelessWidget {
+class ProductDetailScreen extends StatefulWidget {
   static const routeName = "/product--details-screen";
 
   const ProductDetailScreen({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+}
+
+class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  bool isHover = true;
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +36,24 @@ class ProductDetailScreen extends StatelessWidget {
         ),
         body: Stack(
           children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.7,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: NetworkImage(
-                      "http://10.0.2.2:8000${product.image}",
-                    ),
+            MouseRegion(
+              onEnter: (f) {
+                setState(() {
+                  isHover = true;
+                });
+              },
+              onExit: (f) {
+                setState(() {
+                  isHover = false;
+                });
+              },
+              child: AnimatedContainer(
+                duration: Duration(milliseconds: 100),
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.7,
+                child: Image(
+                    image: NetworkImage("http://10.0.2.2:8000${product.image}",
+                        scale: 1.2),
                     fit: BoxFit.cover),
               ),
             ),
@@ -142,93 +159,5 @@ class ProductDetailScreen extends StatelessWidget {
         ),
       ),
     );
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     title: const Text("Product Details"),
-    //     actions: [
-    //       IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-    //       FlatButton.icon(
-    //         onPressed: () {
-    //           Navigator.of(context).pushNamed(CartScreen.routeName);
-    //         },
-    //         icon: const Icon(
-    //           Icons.shopping_cart,
-    //           color: Colors.white,
-    //         ),
-    //         label: Text(
-    //           cart != null ? "${cart.cartproducts?.length}" : '',
-    //           style: const TextStyle(
-    //             color: Colors.white,
-    //           ),
-    //         ),
-    //       )
-    //     ],
-    //   ),
-    //   body: Padding(
-    //     padding: const EdgeInsets.all(10),
-    //     child: SingleChildScrollView(
-    //       child:
-    //           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-    //         Image.network(
-    //           "http://10.0.2.2:8000${product.image}",
-    //           fit: BoxFit.contain,
-    //           height: 250,
-    //           width: 400,
-    //         ),
-    //         Row(
-    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //           children: [
-    //             Expanded(
-    //               child: Text(
-    //                 product.title!,
-    //                 style: titleText,
-    //               ),
-    //             ),
-    //             ElevatedButton.icon(
-    //               onPressed: () {
-    //                 Provider.of<CartState>(context, listen: false)
-    //                     .addtoCart(id!);
-    //               },
-    //               icon: const Icon(Icons.shopping_cart),
-    //               label: const Text("Add to Cart"),
-    //             )
-    //           ],
-    //         ),
-    //         const SizedBox(
-    //           height: 10,
-    //         ),
-    //         Row(
-    //           children: [
-    //             Text(
-    //               "Selling Price: Rs",
-    //               style: subTitle.copyWith(fontSize: 20),
-    //             ),
-    //             const SizedBox(
-    //               width: 6,
-    //             ),
-    //             Text(
-    //               product.sellingPrice!.toString(),
-    //               style: subTitle.copyWith(fontSize: 20),
-    //             ),
-    //           ],
-    //         ),
-    //         const SizedBox(
-    //           height: 10,
-    //         ),
-    //         Text(
-    //           product.description!,
-    //           textAlign: TextAlign.left,
-    //           style: const TextStyle(
-    //             height: 1.45,
-    //             fontSize: 16,
-    //           ),
-    //         ),
-    //         const SizedBox(
-    //           height: 10,
-    //         ),
-    //       ]),
-    //     ),
-    //   ),
-    // );
   }
 }

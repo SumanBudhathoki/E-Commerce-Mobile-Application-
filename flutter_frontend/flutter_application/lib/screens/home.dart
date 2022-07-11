@@ -3,11 +3,11 @@ import 'package:flutter_application/screens/addproduct.dart';
 import 'package:flutter_application/screens/cart.dart';
 import 'package:flutter_application/screens/homepage.dart';
 import 'package:flutter_application/screens/myshop.dart';
+import 'package:flutter_application/widgets/app_drawer.dart';
 import 'package:provider/provider.dart';
 import '../state/user_state.dart';
 import '../theme.dart';
 import 'favourite.dart';
-import 'login.dart';
 
 class Home extends StatefulWidget {
   static const routeName = '/home';
@@ -29,13 +29,13 @@ class _HomeState extends State<Home> {
     HomePage(),
     FavouriteScreen(),
     CartScreen(),
-    LoginScreen(),
+    AppDrawer(),
   ];
   final sellerscreens = [
     HomePage(),
     AddProductScreen(),
     MyShop(),
-    LoginScreen(),
+    AppDrawer(),
   ];
 
   @override

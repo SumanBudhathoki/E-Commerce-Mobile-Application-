@@ -12,6 +12,7 @@ import 'package:flutter_application/screens/payment_selection.dart';
 import 'package:flutter_application/screens/product_detail.dart';
 import 'package:flutter_application/screens/registerbuyer.dart';
 import 'package:flutter_application/screens/registerseller.dart';
+import 'package:flutter_application/screens/userprofile.dart';
 import 'package:flutter_application/state/cart_state.dart';
 import 'package:flutter_application/state/product_state.dart';
 import 'package:flutter_application/state/user_state.dart';
@@ -80,6 +81,7 @@ class MyApp extends StatelessWidget {
             routes: {
               Home.routeName: (context) => const Home(),
               HomePage.routeName: (context) => const HomePage(),
+              UserProfile.routeName: (context) => const UserProfile(),
               MyShop.routeName: (context) => const MyShop(),
               // HomeScreen.routeName: (context) => const ImageUpload(),
               ProductDetailScreen.routeName: (context) =>
