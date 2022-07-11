@@ -14,8 +14,7 @@ Backend - Django
 
 
 ## Screenshots
-<a href="url"><img src="https://github.com/SumanBudhathoki/E-Commerce-Mobile-Application-/blob/e03bc043d4693d3eef9f50411aa2e490fb212a92/screenshot/1.png" align="left" height="48" width="48" ></a>
-![App Screenshot](https://github.com/SumanBudhathoki/E-Commerce-Mobile-Application-/blob/e03bc043d4693d3eef9f50411aa2e490fb212a92/screenshot/1.png)
-![App Screenshot](https://github.com/SumanBudhathoki/E-Commerce-Mobile-Application-/blob/e03bc043d4693d3eef9f50411aa2e490fb212a92/screenshot/8.png)
-![App Screenshot](https://github.com/SumanBudhathoki/E-Commerce-Mobile-Application-/blob/e03bc043d4693d3eef9f50411aa2e490fb212a92/screenshot/10.png)
-![App Screenshot](https://github.com/SumanBudhathoki/E-Commerce-Mobile-Application-/blob/e03bc043d4693d3eef9f50411aa2e490fb212a92/screenshot/7.png)
+<a href="url"><img src="https://github.com/SumanBudhathoki/E-Commerce-Mobile-Application-/blob/e03bc043d4693d3eef9f50411aa2e490fb212a92/screenshot/1.png" align="center" height="1000" width="500" ></a>
+<a href="url"><img src="https://github.com/SumanBudhathoki/E-Commerce-Mobile-Application-/blob/e03bc043d4693d3eef9f50411aa2e490fb212a92/screenshot/8.png" align="left" height="1000" width="500" ></a>
+<a href="url"><img src="https://github.com/SumanBudhathoki/E-Commerce-Mobile-Application-/blob/e03bc043d4693d3eef9f50411aa2e490fb212a92/screenshot/10.png" align="left" height="1000" width="500" ></a>
+<a href="url"><img src="https://github.com/SumanBudhathoki/E-Commerce-Mobile-Application-/blob/e03bc043d4693d3eef9f50411aa2e490fb212a92/screenshot/7.png" align="left" height="1000" width="500" ></a>
