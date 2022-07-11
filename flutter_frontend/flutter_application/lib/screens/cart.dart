@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
-import 'package:flutter_application/screens/homepage.dart';
-
+import 'package:flutter_application/screens/home.dart';
 import 'package:flutter_application/screens/order_screen.dart';
 import 'package:flutter_application/state/cart_state.dart';
+import 'package:flutter_application/theme.dart';
 import 'package:provider/provider.dart';
 
 import '../state/product_state.dart';
@@ -20,6 +19,8 @@ class CartScreen extends StatelessWidget {
     if (cart == null) {
       return Scaffold(
         appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.white,
           title: const Text("Cart Screen"),
         ),
         body: const Center(child: Text("Nothing in the cart")),
@@ -27,18 +28,21 @@ class CartScreen extends StatelessWidget {
     } else {
       return Scaffold(
         appBar: AppBar(
-          title: const Text("Cart Screen"),
+          foregroundColor: kPrimaryColor,
+          elevation: 0,
+          backgroundColor: Colors.white,
+          title: const Text("Cart"),
           actions: [
             FlatButton.icon(
               onPressed: () {},
               icon: const Icon(
                 Icons.shopping_cart,
-                color: Colors.white,
+                color: kPrimaryColor,
               ),
               label: Text(
                 cart != null ? "${cart.cartproducts?.length}" : '',
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: kPrimaryColor,
                 ),
               ),
             )
@@ -47,43 +51,6 @@ class CartScreen extends StatelessWidget {
         body: Padding(
           padding: const EdgeInsets.all(12),
           child: Column(children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text("Total : Rs ${cart.total}"),
-                Text("Data : ${cart.date}"),
-                ElevatedButton(
-                  onPressed: cart.cartproducts!.isEmpty
-                      ? null
-                      : () {
-                          Navigator.of(context)
-                              .pushNamed(OrderScreen.routeName);
-                        },
-                  child: const Text("Order"),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.blue[500],
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: cart.cartproducts!.isEmpty
-                      ? null
-                      : () async {
-                          bool isdelete = await Provider.of<CartState>(context,
-                                  listen: false)
-                              .deleteAllCart(cart.id);
-                          if (isdelete) {
-                            // cart.total = 0;
-                            Navigator.of(context)
-                                .pushReplacementNamed(HomePage.routeName);
-                          }
-                        },
-                  child: const Text("Delete"),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.red[500],
-                  ),
-                ),
-              ],
-            ),
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,
@@ -107,29 +74,135 @@ class CartScreen extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("${item.product![0].title}"),
-                              Text("Price : Rs ${item.price}"),
-                              Text("Quantity : ${item.quantity}"),
+                              Text(
+                                "${item.product![0].title}",
+                                style: sTitleText.copyWith(fontSize: 20),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "Price : Rs ${item.price}",
+                                style: subTitle,
+                              ),
+                              Text(
+                                "Quantity : ${item.quantity}",
+                                style: subTitle,
+                              ),
                             ],
                           ),
-                          IconButton(
-                            onPressed: () {
-                              Provider.of<CartState>(context, listen: false)
-                                  .deleteCartProduct(item.id);
-                            },
-                            icon: const Icon(Icons.delete),
-                            // child: const Text("Delete"),
-                            // style: ElevatedButton.styleFrom(
-                            //   primary: Colors.red[500],
-                            // ),
-                          ),
+                          Column(children: [
+                            IconButton(
+                              onPressed: () {
+                                Provider.of<CartState>(context, listen: false)
+                                    .deleteCartProduct(item.id);
+                              },
+                              icon: const Icon(Icons.delete),
+                              color: Colors.red,
+                              // child: const Text("Delete"),
+                              // style: ElevatedButton.styleFrom(
+                              //   primary: Colors.red[500],
+                              // ),
+                            ),
+                            Container(
+                              width: 60,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Icon(
+                                    Icons.remove_circle_rounded,
+                                    size: 20,
+                                    color: kPrimaryColor,
+                                  ),
+                                  Text(
+                                    "${item.quantity}",
+                                    style: sTitleText.copyWith(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  InkWell(
+                                    child: const Icon(
+                                      Icons.add_circle_rounded,
+                                      size: 20,
+                                      color: kPrimaryColor,
+                                    ),
+                                    onTap: () {
+                                      item.quantity = item.quantity! + 1;
+                                    },
+                                  )
+                                ],
+                              ),
+                            )
+                          ]),
                         ],
                       ),
                     ),
                   );
                 },
               ),
-            )
+            ),
+            const Divider(
+              thickness: 1,
+            ),
+            Column(children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Total",
+                    style: sTitleText.copyWith(fontSize: 22),
+                  ),
+                  Text("Rs ${cart.total}",
+                      style: sTitleText.copyWith(fontSize: 22)),
+                ],
+              ),
+              const Divider(
+                thickness: 1,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    onPressed: cart.cartproducts!.isEmpty
+                        ? null
+                        : () async {
+                            bool isdelete = await Provider.of<CartState>(
+                                    context,
+                                    listen: false)
+                                .deleteAllCart(cart.id);
+                            if (isdelete) {
+                              // cart.total = 0;
+                              Navigator.of(context)
+                                  .pushReplacementNamed(Home.routeName);
+                            }
+                          },
+                    child: const Text("Delete"),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red[500],
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  ElevatedButton(
+                    onPressed: cart.cartproducts!.isEmpty
+                        ? null
+                        : () {
+                            Navigator.of(context)
+                                .pushNamed(OrderScreen.routeName);
+                          },
+                    child: const Text("Order"),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.blue[500],
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                ],
+              ),
+            ]),
           ]),
         ),
       );

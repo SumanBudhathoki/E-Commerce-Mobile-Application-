@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/screens/cart.dart';
+import 'package:flutter_application/screens/favourite.dart';
 import 'package:flutter_application/screens/search.dart';
 import 'package:flutter_application/state/cart_state.dart';
 import 'package:flutter_application/state/product_state.dart';
@@ -61,7 +62,6 @@ class _HomePageState extends State<HomePage> {
         ),
         backgroundColor: Colors.white,
         actions: [
-          // ignore: deprecated_member_use
           FlatButton.icon(
             onPressed: () {
               Navigator.of(context).pushNamed(CartScreen.routeName);
@@ -73,9 +73,22 @@ class _HomePageState extends State<HomePage> {
             label: Text(
               cart != null ? "${cart.cartproducts?.length}" : '',
               style: const TextStyle(
-                color: Colors.black,
+                color: kPrimaryColor,
+                fontWeight: FontWeight.bold,
               ),
             ),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(FavouriteScreen.routeName);
+            },
+            icon: const Icon(
+              Icons.favorite,
+              color: Colors.red,
+            ),
+          ),
+          const SizedBox(
+            width: 15,
           ),
         ],
       ),

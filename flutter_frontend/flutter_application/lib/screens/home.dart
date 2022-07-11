@@ -18,6 +18,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   int currentIndex = 0;
   final buyerscreens = [
     HomePage(),
@@ -62,8 +68,8 @@ class _HomeState extends State<Home> {
               label: 'Cart',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.logout_outlined),
-              label: 'Logout',
+              icon: Icon(Icons.person),
+              label: 'Profile',
             ),
           ],
         ),
@@ -86,7 +92,7 @@ class _HomeState extends State<Home> {
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.add),
+              icon: Icon(Icons.add_circle),
               label: 'Add Product',
             ),
             BottomNavigationBarItem(
@@ -94,8 +100,8 @@ class _HomeState extends State<Home> {
               label: 'My Shop',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.logout_outlined),
-              label: 'Logout',
+              icon: Icon(Icons.person),
+              label: 'Profile',
             ),
           ],
         ),

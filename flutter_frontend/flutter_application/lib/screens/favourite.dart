@@ -8,6 +8,8 @@ class FavouriteScreen extends StatelessWidget {
   static const routeName = '/favourite-screen';
   const FavouriteScreen({Key? key}) : super(key: key);
 
+  get kPrimaryColor => null;
+
   @override
   Widget build(BuildContext context) {
     final favourite = Provider.of<ProductState>(context).favourites;
@@ -15,9 +17,14 @@ class FavouriteScreen extends StatelessWidget {
     if (favouriteLength >= 1) {
       return Scaffold(
         appBar: AppBar(
-          title: const Text("Favourites"),
+          foregroundColor: Colors.black,
+          elevation: 0,
+          title: Text(
+            'Favourites',
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: Colors.white,
         ),
-        drawer: const AppDrawer(),
         body: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             childAspectRatio: 2 / 3,
